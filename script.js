@@ -146,6 +146,9 @@ function recalculateFeasibility() {
   // 4.4 Max Estimated Floors
   const estFloors = Math.max(1, Math.floor(setbacks.heightLimitMeters / 3.2));
 
+  // --- Update Road Gatekeeper Alert Banner ---
+  updateRoadGatekeeperBanner(setbacks, zone);
+
   // --- Update Hero Metric Tiles ---
   document.getElementById('valMaxGfa').textContent = fmt(maxGfa, 1);
   document.getElementById('valMaxFootprint').textContent = fmt(legalFootprint, 1);
@@ -186,6 +189,79 @@ function recalculateFeasibility() {
 
   // Re-render 2D Schematic SVG
   renderSchematicSvg(setbacks);
+}
+
+// --- 4.5 Road Gatekeeper Alert Banner Engine ---
+function updateRoadGatekeeperBanner(setbacks, zone) {
+  const banner = document.getElementById('roadGatekeeperBanner');
+  const iconBox = document.getElementById('gatekeeperIconBox');
+  const pill = document.getElementById('gatekeeperPill');
+  const title = document.getElementById('gatekeeperTitle');
+  const desc = document.getElementById('gatekeeperDesc');
+
+  if (!banner || !iconBox || !pill || !title || !desc) return;
+
+  const road = state.roadWidth;
+  const typo = state.typology;
+  const typoNames = {
+    residential: 'บ้านเดี่ยว / พักอาศัย',
+    shophouse: 'อาคารพาณิชย์ / ตึกแถว',
+    highrise: 'อาคารขนาดใหญ่ / คอนโด'
+  };
+  const typoName = typoNames[typo] || 'อาคารพักอาศัย';
+
+  let status = 'pass';
+  let pillText = 'ผ่านเกณฑ์';
+  let titleText = 'ผ่านเกณฑ์ความกว้างเขตทางถนนสาธารณะ';
+  let descText = `ถนนกว้าง ${fmt(road, 1)} ม. สอดคล้องตามเกณฑ์ควบคุมอาคารสำหรับ${typoName} สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น`;
+  let iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+
+  // 1. Error / Violation (สร้างไม่ได้)
+  if (typo === 'highrise' && road < 10.0) {
+    status = 'violation';
+    pillText = 'สร้างไม่ได้';
+    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: เขตทางถนนน้อยกว่า 10.00 ม. ไม่สามารถสร้างอาคารขนาดใหญ่/อาคารสูงได้ (กฎกระทรวง ฉบับที่ 33)';
+    descText = `ตามกฎกระทรวง ฉบับที่ 33 อาคารสูงหรืออาคารขนาดใหญ่พิเศษต้องมีเขตทางถนนสาธารณะกว้างไม่น้อยกว่า 10.00 ม. เชื่อมต่อไปยังถนนสาธารณะสายหลัก (ปัจจุบันถนนกว้าง ${fmt(road, 1)} ม.)`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+  } else if (setbacks.buildWidth <= 0 || setbacks.buildDepth <= 0) {
+    status = 'violation';
+    pillText = 'สร้างไม่ได้';
+    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: ระยะร่นตามกฎหมายกินพื้นที่เกินขนาดแปลงที่ดิน';
+    descText = `ขนาดที่ดิน ${fmt(state.widthMeters, 1)} × ${fmt(state.depthMeters, 1)} ม. เมื่อหักระยะร่นรอบแปลงแล้วไม่มีพื้นที่เหลือเพียงพอสำหรับก่อสร้างอาคาร`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+  } else if (typo === 'shophouse' && road < 4.0) {
+    status = 'violation';
+    pillText = 'สร้างไม่ได้';
+    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: เขตทางถนนน้อยกว่า 4.00 ม. ไม่สามารถสร้างอาคารพาณิชย์/ตึกแถวได้ (กฎกระทรวง ฉบับที่ 55 ข้อ 36)';
+    descText = `อาคารพาณิชย์หรือตึกแถวต้องอยู่ติดถนนสาธารณะที่มีเขตทางกว้างไม่น้อยกว่า 4.00 ม. (ปัจจุบัน ${fmt(road, 1)} ม.)`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
+  }
+  // 2. Warning (ติดเงื่อนไข)
+  else if (road < 6.0) {
+    status = 'warning';
+    pillText = 'ติดเงื่อนไข';
+    titleText = 'จำกัดพื้นที่อาคารรวมไม่เกิน 2,000 ตร.ม. (ข้อ 54)';
+    descText = `ถนนสาธารณะแคบกว่า 6.00 ม. (ปัจจุบัน ${fmt(road, 1)} ม.) ตามกฎกระทรวง ฉบับที่ 55 ข้อ 54 ห้ามสร้างอาคารพาณิชย์ขนาดใหญ่หรืออาคารอยู่อาศัยรวม และต้องร่นจากกึ่งกลางถนนไม่น้อยกว่า 3.00 ม.`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+  } else if (typo === 'highrise' && road >= 10.0 && road < 18.0) {
+    status = 'warning';
+    pillText = 'ติดเงื่อนไข';
+    titleText = 'จำกัดพื้นที่อาคารรวมไม่เกิน 10,000 ตร.ม. (เขตทาง 10 - 18 ม.)';
+    descText = `หากพัฒนาเป็นอาคารขนาดใหญ่พิเศษเกิน 10,000 ตร.ม. ต้องอยู่ติดถนนสาธารณะกว้างตั้งแต่ 18.00 ม. ขึ้นไป (ปัจจุบัน ${fmt(road, 1)} ม. สามารถสร้างได้ไม่เกินเกณฑ์ 10,000 ตร.ม.)`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+  } else if (setbacks.buildWidth < 4.0) {
+    status = 'warning';
+    pillText = 'ติดเงื่อนไข';
+    titleText = `หน้ากว้างอาคารก่อสร้างได้แคบมาก (${fmt(setbacks.buildWidth, 2)} ม.)`;
+    descText = `ระยะร่นด้านข้างทำให้เหลือความกว้างก่อสร้างน้อยกว่า 4.00 ม. ควรพิจารณาทำผนังทึบชิดเขตที่ดินโดยได้รับความยินยอมเป็นหนังสือ`;
+    iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
+  }
+
+  banner.className = `road-gatekeeper-banner ${status}`;
+  pill.textContent = pillText;
+  title.textContent = titleText;
+  desc.textContent = descText;
+  iconBox.innerHTML = iconSvg;
 }
 
 // --- 5. Valuation Calculation ---
@@ -267,25 +343,25 @@ function renderSchematicSvg(setbacks) {
   const viewW = 800;
   const viewH = 560;
 
-  // Total domain includes road depth in front + plot depth
-  const roadVisualDepth = Math.max(4.0, road);
-  const totalWorldH = D + roadVisualDepth + 4.0; // padding
-  const totalWorldW = W + 8.0; // padding
+  // Layout Boundaries & Clear Architectural Offsets
+  const roadTop = 26;
+  const roadH = 46;
+  const roadBottom = roadTop + roadH;
+  const roadCenterY = roadTop + roadH / 2;
+  const roadGap = 32; // Vertical offset between road and plot front
+  const plotStartY = roadBottom + roadGap; // 104px
 
-  // Calculate Scale Factor (Pixels per meter)
-  const scaleX = (viewW - 120) / totalWorldW;
-  const scaleY = (viewH - 120) / totalWorldH;
-  const scale = Math.min(scaleX, scaleY);
+  // Maximum domain for plot to leave ample room for external dimensions and margins
+  const maxPlotW = 460;
+  const maxPlotH = 320;
+  const scale = Math.min(maxPlotW / Math.max(W, 8), maxPlotH / Math.max(D, 10));
 
-  // Pixel coordinates calculation
   const plotPixelW = W * scale;
   const plotPixelH = D * scale;
-  const roadPixelH = roadVisualDepth * scale;
+  const plotBottomY = plotStartY + plotPixelH;
 
-  // Center the plot horizontally and vertically
-  const startX = (viewW - plotPixelW) / 2;
-  const roadStartY = 50;
-  const plotStartY = roadStartY + roadPixelH;
+  // Position plot horizontally with room on left and right for dimensions
+  const startX = (viewW - 140 - plotPixelW) / 2 + 30;
 
   // Setback Pixel dimensions
   const frontSetbackPx = setbacks.front * scale;
@@ -302,12 +378,15 @@ function renderSchematicSvg(setbacks) {
   // Determine dark mode colors
   const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
   const strokeColor = isDark ? '#E2E8F0' : '#1E293B';
-  const roadLineColor = isDark ? '#475569' : '#94A3B8';
+  const roadBg = isDark ? '#1C222A' : '#E8ECEF';
+  const roadLineColor = isDark ? '#64748B' : '#94A3B8';
   const dimColor = isDark ? '#94A3B8' : '#475569';
   const setbackStroke = isDark ? '#F87171' : '#DC2626';
-  const setbackFill = isDark ? 'rgba(248, 113, 113, 0.12)' : 'rgba(220, 38, 38, 0.08)';
+  const setbackFill = isDark ? 'rgba(248, 113, 113, 0.14)' : 'rgba(220, 38, 38, 0.08)';
   const buildStroke = isDark ? '#4ADE80' : '#16A34A';
   const buildFill = isDark ? 'rgba(74, 222, 128, 0.18)' : 'rgba(34, 197, 94, 0.14)';
+  const badgeCardBg = isDark ? '#14181E' : '#FFFFFF';
+  const setbackBadgeBg = isDark ? '#1C1617' : '#FFFFFF';
 
   let svgContent = `
     <!-- Defs for Cross-Hatch Pattern -->
@@ -320,92 +399,156 @@ function renderSchematicSvg(setbacks) {
       </pattern>
     </defs>
 
-    <!-- 1. PUBLIC ROAD STRIP -->
-    <rect x="${startX - 60}" y="${roadStartY}" width="${plotPixelW + 120}" height="${roadPixelH}" fill="${isDark ? '#1E242C' : '#E2E8F0'}" opacity="0.75" />
+    <!-- 1. PUBLIC ROAD STRIP (TOP ZONE) -->
+    <rect x="${startX - 70}" y="${roadTop}" width="${plotPixelW + 140}" height="${roadH}" rx="4" fill="${roadBg}" opacity="0.9" />
     <!-- Road Centerline -->
-    <line x1="${startX - 60}" y1="${roadStartY + roadPixelH / 2}" x2="${startX + plotPixelW + 60}" y2="${roadStartY + roadPixelH / 2}" stroke="${roadLineColor}" stroke-dasharray="6,4" stroke-width="1.5" />
-    <text x="${startX + plotPixelW / 2}" y="${roadStartY + roadPixelH / 2 - 6}" font-family="JetBrains Mono" font-size="11" font-weight="600" fill="${roadLineColor}" text-anchor="middle">
-      ถนนสาธารณะ (เขตทาง ${fmt(road, 1)} ม.)
+    <line x1="${startX - 80}" y1="${roadCenterY}" x2="${startX + plotPixelW + 80}" y2="${roadCenterY}" stroke="${roadLineColor}" stroke-dasharray="8 6" stroke-width="1.5" />
+    <!-- Road Boundary Line (South edge of road) -->
+    <line x1="${startX - 70}" y1="${roadBottom}" x2="${startX + plotPixelW + 70}" y2="${roadBottom}" stroke="${roadLineColor}" stroke-width="1.5" />
+
+    <!-- Road Title Pill Badge (Center over road, prevents line clash) -->
+    <g transform="translate(${startX + plotPixelW / 2}, ${roadCenterY})">
+      <rect x="-115" y="-12" width="230" height="24" rx="12" fill="${badgeCardBg}" stroke="${roadLineColor}" stroke-width="1.2" />
+      <text x="0" y="4" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="${isDark ? '#E2E8F0' : '#1E293B'}">
+        ถนนสาธารณะ (เขตทาง ${fmt(road, 1)} ม.)
+      </text>
+    </g>
+
+    <!-- Visual Gap / Offset Indicator between Road and Plot -->
+    <text x="${startX + plotPixelW / 2}" y="${roadBottom + 19}" text-anchor="middle" font-family="'Prompt', sans-serif" font-size="10" font-weight="500" fill="${dimColor}" opacity="0.85">
+      แนวเขตทางถนนสาธารณะ ⮯
     </text>
 
-    <!-- 2. PLOT BOUNDARY -->
-    <rect x="${startX}" y="${plotStartY}" width="${plotPixelW}" height="${plotPixelH}" fill="${isDark ? '#181C22' : '#FFFFFF'}" stroke="${strokeColor}" stroke-width="2.5" />
-    <text x="${startX + 12}" y="${plotStartY + 20}" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="${strokeColor}" opacity="0.7">
+    <!-- 2. PLOT BOUNDARY (MAIN SITE) -->
+    <!-- Plot Identity Tag placed outside top-left -->
+    <text x="${startX}" y="${plotStartY - 8}" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="${strokeColor}">
       แนวเขตที่ดิน (${fmt(W, 1)}ม. × ${fmt(D, 1)}ม.)
     </text>
+    <!-- Plot Boundary Rectangle -->
+    <rect x="${startX}" y="${plotStartY}" width="${plotPixelW}" height="${plotPixelH}" fill="${badgeCardBg}" stroke="${strokeColor}" stroke-width="2.5" />
 
-    <!-- 3. SETBACK REGIONS -->
+    <!-- Corner Survey Marks (Tick Crosses) -->
+    <g stroke="${strokeColor}" stroke-width="1.2">
+      <line x1="${startX - 5}" y1="${plotStartY}" x2="${startX + 5}" y2="${plotStartY}" />
+      <line x1="${startX}" y1="${plotStartY - 5}" x2="${startX}" y2="${plotStartY + 5}" />
+      <line x1="${startX + plotPixelW - 5}" y1="${plotStartY}" x2="${startX + plotPixelW + 5}" y2="${plotStartY}" />
+      <line x1="${startX + plotPixelW}" y1="${plotStartY - 5}" x2="${startX + plotPixelW}" y2="${plotStartY + 5}" />
+      <line x1="${startX - 5}" y1="${plotBottomY}" x2="${startX + 5}" y2="${plotBottomY}" />
+      <line x1="${startX}" y1="${plotBottomY - 5}" x2="${startX}" y2="${plotBottomY + 5}" />
+      <line x1="${startX + plotPixelW - 5}" y1="${plotBottomY}" x2="${startX + plotPixelW + 5}" y2="${plotBottomY}" />
+      <line x1="${startX + plotPixelW}" y1="${plotBottomY - 5}" x2="${startX + plotPixelW}" y2="${plotBottomY + 5}" />
+    </g>
+
+    <!-- 3. SETBACK REGIONS WITH PROTECTED PILL BADGES (NO HATCH CUTTING) -->
     ${state.showSetbackHatch ? `
       <!-- Front Setback Strip -->
-      <rect x="${startX}" y="${plotStartY}" width="${plotPixelW}" height="${frontSetbackPx}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4,3" stroke-width="1" />
-      <text x="${startX + plotPixelW / 2}" y="${plotStartY + frontSetbackPx / 2 + 4}" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="${setbackStroke}" text-anchor="middle">
-        ร่นหน้า ${fmt(setbacks.front, 2)} ม.
-      </text>
+      <rect x="${startX}" y="${plotStartY}" width="${plotPixelW}" height="${frontSetbackPx}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4 3" stroke-width="1" />
+      <g transform="translate(${startX + plotPixelW / 2}, ${plotStartY + frontSetbackPx / 2})">
+        <rect x="-62" y="-10" width="124" height="20" rx="10" fill="${setbackBadgeBg}" stroke="${setbackStroke}" stroke-width="1.2" />
+        <text x="0" y="4" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="${setbackStroke}" text-anchor="middle">
+          ร่นหน้า ${fmt(setbacks.front, 2)} ม.
+        </text>
+      </g>
 
       <!-- Rear Setback Strip -->
-      <rect x="${startX}" y="${plotStartY + plotPixelH - rearSetbackPx}" width="${plotPixelW}" height="${rearSetbackPx}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4,3" stroke-width="1" />
-      <text x="${startX + plotPixelW / 2}" y="${plotStartY + plotPixelH - rearSetbackPx / 2 + 4}" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="${setbackStroke}" text-anchor="middle">
-        ร่นหลัง ${fmt(setbacks.rear, 2)} ม.
-      </text>
+      <rect x="${startX}" y="${plotBottomY - rearSetbackPx}" width="${plotPixelW}" height="${rearSetbackPx}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4 3" stroke-width="1" />
+      <g transform="translate(${startX + plotPixelW / 2}, ${plotBottomY - rearSetbackPx / 2})">
+        <rect x="-62" y="-10" width="124" height="20" rx="10" fill="${setbackBadgeBg}" stroke="${setbackStroke}" stroke-width="1.2" />
+        <text x="0" y="4" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" fill="${setbackStroke}" text-anchor="middle">
+          ร่นหลัง ${fmt(setbacks.rear, 2)} ม.
+        </text>
+      </g>
 
       <!-- Left Side Setback Strip -->
-      <rect x="${startX}" y="${plotStartY + frontSetbackPx}" width="${sideLeftSetbackPx}" height="${buildH}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4,3" stroke-width="1" />
-      <text x="${startX + sideLeftSetbackPx / 2}" y="${plotStartY + frontSetbackPx + buildH / 2}" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="${setbackStroke}" text-anchor="middle" transform="rotate(-90 ${startX + sideLeftSetbackPx / 2} ${plotStartY + frontSetbackPx + buildH / 2})">
-        ร่นข้าง ${fmt(setbacks.sideLeft, 2)} ม.
-      </text>
+      ${setbacks.sideLeft > 0 ? `
+        <rect x="${startX}" y="${plotStartY + frontSetbackPx}" width="${sideLeftSetbackPx}" height="${buildH}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4 3" stroke-width="1" />
+        ${sideLeftSetbackPx >= 22 ? `
+          <g transform="translate(${startX + sideLeftSetbackPx / 2}, ${plotStartY + frontSetbackPx + buildH / 2}) rotate(-90)">
+            <rect x="-56" y="-9" width="112" height="18" rx="9" fill="${setbackBadgeBg}" stroke="${setbackStroke}" stroke-width="1" />
+            <text x="0" y="4" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="${setbackStroke}" text-anchor="middle">
+              ร่นข้าง ${fmt(setbacks.sideLeft, 2)} ม.
+            </text>
+          </g>
+        ` : ''}
+      ` : ''}
 
       <!-- Right Side Setback Strip -->
-      <rect x="${startX + plotPixelW - sideRightSetbackPx}" y="${plotStartY + frontSetbackPx}" width="${sideRightSetbackPx}" height="${buildH}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4,3" stroke-width="1" />
-      <text x="${startX + plotPixelW - sideRightSetbackPx / 2}" y="${plotStartY + frontSetbackPx + buildH / 2}" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="${setbackStroke}" text-anchor="middle" transform="rotate(90 ${startX + plotPixelW - sideRightSetbackPx / 2} ${plotStartY + frontSetbackPx + buildH / 2})">
-        ร่นข้าง ${fmt(setbacks.sideRight, 2)} ม.
-      </text>
+      ${setbacks.sideRight > 0 ? `
+        <rect x="${startX + plotPixelW - sideRightSetbackPx}" y="${plotStartY + frontSetbackPx}" width="${sideRightSetbackPx}" height="${buildH}" fill="url(#setbackHatch)" stroke="${setbackStroke}" stroke-dasharray="4 3" stroke-width="1" />
+        ${sideRightSetbackPx >= 22 ? `
+          <g transform="translate(${startX + plotPixelW - sideRightSetbackPx / 2}, ${plotStartY + frontSetbackPx + buildH / 2}) rotate(90)">
+            <rect x="-56" y="-9" width="112" height="18" rx="9" fill="${setbackBadgeBg}" stroke="${setbackStroke}" stroke-width="1" />
+            <text x="0" y="4" font-family="'JetBrains Mono', monospace" font-size="9" font-weight="600" fill="${setbackStroke}" text-anchor="middle">
+              ร่นข้าง ${fmt(setbacks.sideRight, 2)} ม.
+            </text>
+          </g>
+        ` : ''}
+      ` : ''}
     ` : ''}
 
     <!-- 4. BUILDABLE ENVELOPE (POLYGON WITH HATCH) -->
     ${buildW > 0 && buildH > 0 ? `
-      <rect x="${buildX}" y="${buildY}" width="${buildW}" height="${buildH}" fill="${buildFill}" stroke="${buildStroke}" stroke-width="2" />
+      <rect x="${buildX}" y="${buildY}" width="${buildW}" height="${buildH}" fill="${buildFill}" stroke="${buildStroke}" stroke-width="2.5" />
       <rect x="${buildX}" y="${buildY}" width="${buildW}" height="${buildH}" fill="url(#buildableHatch)" />
       
-      <!-- Center Buildable Badge -->
+      <!-- Center Buildable Badge (Elevated Card with Shadow) -->
       <g transform="translate(${buildX + buildW / 2}, ${buildY + buildH / 2})">
-        <rect x="-85" y="-18" width="170" height="36" rx="6" fill="${isDark ? '#0F172A' : '#FFFFFF'}" stroke="${buildStroke}" stroke-width="1.5" />
-        <text x="0" y="-3" font-family="Space Grotesk" font-size="11" font-weight="700" fill="${buildStroke}" text-anchor="middle">
+        <rect x="-95" y="-22" width="190" height="44" rx="8" fill="${badgeCardBg}" stroke="${buildStroke}" stroke-width="2" filter="drop-shadow(0 4px 12px rgba(0,0,0,0.14))" />
+        <text x="0" y="-4" font-family="'Space Grotesk', sans-serif" font-size="11" font-weight="700" fill="${buildStroke}" letter-spacing="0.06em" text-anchor="middle">
           BUILDABLE ENVELOPE
         </text>
-        <text x="0" y="11" font-family="JetBrains Mono" font-size="10" font-weight="600" fill="${isDark ? '#E2E8F0' : '#1E293B'}" text-anchor="middle">
+        <text x="0" y="13" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600" fill="${isDark ? '#F1F5F9' : '#1E293B'}" text-anchor="middle">
           ${fmt(setbacks.buildWidth, 2)}ม. × ${fmt(setbacks.buildDepth, 2)}ม. (${fmt(setbacks.buildableFootprintGround, 1)} ตร.ม.)
         </text>
       </g>
     ` : `
       <g transform="translate(${startX + plotPixelW / 2}, ${plotStartY + plotPixelH / 2})">
-        <rect x="-100" y="-16" width="200" height="32" rx="6" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.5" />
-        <text x="0" y="4" font-family="Prompt" font-size="12" font-weight="600" fill="#B91C1C" text-anchor="middle">
+        <rect x="-115" y="-18" width="230" height="36" rx="8" fill="#FEE2E2" stroke="#EF4444" stroke-width="1.8" />
+        <text x="0" y="5" font-family="'Prompt', sans-serif" font-size="12" font-weight="700" fill="#B91C1C" text-anchor="middle">
           ⚠️ ระยะร่นเกินขนาดแปลงที่ดิน
         </text>
       </g>
     `}
 
-    <!-- 5. DIMENSION LINES & TICK MARKS -->
+    <!-- 5. ARCHITECTURAL EXTERIOR DIMENSION LINES (OUTSIDE PLOT) -->
     ${state.showDims ? `
-      <!-- Top Width Dimension -->
+      <!-- Bottom Width Dimension Line (Below Plot) -->
       <g stroke="${dimColor}" stroke-width="1.2">
-        <line x1="${startX}" y1="${plotStartY - 18}" x2="${startX + plotPixelW}" y2="${plotStartY - 18}" />
-        <line x1="${startX}" y1="${plotStartY - 24}" x2="${startX}" y2="${plotStartY - 12}" />
-        <line x1="${startX + plotPixelW}" y1="${plotStartY - 24}" x2="${startX + plotPixelW}" y2="${plotStartY - 12}" />
+        <!-- Witness Lines extending from plot bottom corners down -->
+        <line x1="${startX}" y1="${plotBottomY + 4}" x2="${startX}" y2="${plotBottomY + 44}" opacity="0.65" />
+        <line x1="${startX + plotPixelW}" y1="${plotBottomY + 4}" x2="${startX + plotPixelW}" y2="${plotBottomY + 44}" opacity="0.65" />
+        <!-- Dimension Line -->
+        <line x1="${startX}" y1="${plotBottomY + 34}" x2="${startX + plotPixelW}" y2="${plotBottomY + 34}" stroke-width="1.5" />
+        <!-- 45-degree Architectural Tick Marks -->
+        <line x1="${startX - 5}" y1="${plotBottomY + 39}" x2="${startX + 5}" y2="${plotBottomY + 29}" stroke-width="2.2" />
+        <line x1="${startX + plotPixelW - 5}" y1="${plotBottomY + 39}" x2="${startX + plotPixelW + 5}" y2="${plotBottomY + 29}" stroke-width="2.2" />
       </g>
-      <text x="${startX + plotPixelW / 2}" y="${plotStartY - 22}" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="${dimColor}" text-anchor="middle">
-        หน้ากว้าง ${fmt(W, 2)} ม.
-      </text>
+      <!-- Width Dimension Text Pill Badge -->
+      <g transform="translate(${startX + plotPixelW / 2}, ${plotBottomY + 34})">
+        <rect x="-65" y="-11" width="130" height="22" rx="4" fill="${badgeCardBg}" stroke="${dimColor}" stroke-width="1" />
+        <text x="0" y="4" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="${dimColor}" text-anchor="middle">
+          หน้ากว้าง ${fmt(W, 2)} ม.
+        </text>
+      </g>
 
-      <!-- Right Depth Dimension -->
+      <!-- Right Depth Dimension Line (To the Right of Plot) -->
       <g stroke="${dimColor}" stroke-width="1.2">
-        <line x1="${startX + plotPixelW + 24}" y1="${plotStartY}" x2="${startX + plotPixelW + 24}" y2="${plotStartY + plotPixelH}" />
-        <line x1="${startX + plotPixelW + 18}" y1="${plotStartY}" x2="${startX + plotPixelW + 30}" y2="${plotStartY}" />
-        <line x1="${startX + plotPixelW + 18}" y1="${plotStartY + plotPixelH}" x2="${startX + plotPixelW + 30}" y2="${plotStartY + plotPixelH}" />
+        <!-- Witness Lines extending from plot right corners out -->
+        <line x1="${startX + plotPixelW + 4}" y1="${plotStartY}" x2="${startX + plotPixelW + 46}" y2="${plotStartY}" opacity="0.65" />
+        <line x1="${startX + plotPixelW + 4}" y1="${plotBottomY}" x2="${startX + plotPixelW + 46}" y2="${plotBottomY}" opacity="0.65" />
+        <!-- Dimension Line -->
+        <line x1="${startX + plotPixelW + 36}" y1="${plotStartY}" x2="${startX + plotPixelW + 36}" y2="${plotBottomY}" stroke-width="1.5" />
+        <!-- 45-degree Architectural Tick Marks -->
+        <line x1="${startX + plotPixelW + 31}" y1="${plotStartY + 5}" x2="${startX + plotPixelW + 41}" y2="${plotStartY - 5}" stroke-width="2.2" />
+        <line x1="${startX + plotPixelW + 31}" y1="${plotBottomY + 5}" x2="${startX + plotPixelW + 41}" y2="${plotBottomY - 5}" stroke-width="2.2" />
       </g>
-      <text x="${startX + plotPixelW + 32}" y="${plotStartY + plotPixelH / 2 + 4}" font-family="JetBrains Mono" font-size="11" font-weight="700" fill="${dimColor}" text-anchor="start">
-        ความลึก ${fmt(D, 2)} ม.
-      </text>
+      <!-- Depth Dimension Text Pill Badge (Upright beside line) -->
+      <g transform="translate(${startX + plotPixelW + 48}, ${plotStartY + plotPixelH / 2})">
+        <rect x="0" y="-12" width="116" height="24" rx="4" fill="${badgeCardBg}" stroke="${dimColor}" stroke-width="1" />
+        <text x="58" y="4" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" fill="${dimColor}" text-anchor="middle">
+          ความลึก ${fmt(D, 2)} ม.
+        </text>
+      </g>
     ` : ''}
   `;
 
@@ -490,23 +633,68 @@ function initEventListeners() {
     recalculateFeasibility();
   });
 
-  // 8.4 Deed Inputs
+  // 8.4 Deed Inputs (Rai - Ngan - Wah) with Rollover & Validation
   const deedRai = document.getElementById('deedRai');
   const deedNgan = document.getElementById('deedNgan');
   const deedWah = document.getElementById('deedWah');
+
+  function calculateFromDeed() {
+    const r = Math.max(0, parseInt(deedRai.value) || 0);
+    const n = Math.max(0, parseInt(deedNgan.value) || 0);
+    const w = Math.max(0, parseFloat(deedWah.value) || 0);
+    const totalWah = (r * WAH_PER_RAI) + (n * WAH_PER_NGAN) + w;
+    state.totalSqm = totalWah * SQM_PER_WAH;
+    document.getElementById('inputTotalWah').value = totalWah;
+    document.getElementById('inputTotalSqm').value = state.totalSqm;
+    autoBalanceDimensions();
+    updateChipMeta(false);
+    recalculateFeasibility();
+  }
+
+  function normalizeDeedInputs() {
+    let r = Math.max(0, parseInt(deedRai.value) || 0);
+    let n = Math.max(0, parseInt(deedNgan.value) || 0);
+    let w = Math.max(0, parseFloat(deedWah.value) || 0);
+    let rolledOver = false;
+
+    // ตารางวา: สูงสุดไม่เกิน 99.9 (ถ้ากรอกตั้งแต่ 100 ให้ปัดทดเป็นงาน)
+    if (w >= 100) {
+      const extraNgan = Math.floor(w / 100);
+      w = Number((w % 100).toFixed(1));
+      n += extraNgan;
+      rolledOver = true;
+    }
+
+    // งาน: สูงสุดไม่เกิน 3 (ถ้ากรอกเกิน 3 ให้ปัดทดเป็นไร่)
+    if (n > 3) {
+      const extraRai = Math.floor(n / 4);
+      n = n % 4;
+      r += extraRai;
+      rolledOver = true;
+    }
+
+    deedRai.value = r;
+    deedNgan.value = n;
+    deedWah.value = w;
+
+    const totalWah = (r * WAH_PER_RAI) + (n * WAH_PER_NGAN) + w;
+    state.totalSqm = totalWah * SQM_PER_WAH;
+    document.getElementById('inputTotalWah').value = totalWah;
+    document.getElementById('inputTotalSqm').value = state.totalSqm;
+
+    autoBalanceDimensions();
+    updateChipMeta(true);
+    recalculateFeasibility();
+
+    if (rolledOver) {
+      showToast(`ปัดทดหน่วยโฉนด: ${r} ไร่ ${n} งาน ${w} ตร.ว.`);
+    }
+  }
+
   [deedRai, deedNgan, deedWah].forEach(el => {
-    el.addEventListener('input', () => {
-      const r = parseFloat(deedRai.value) || 0;
-      const n = parseFloat(deedNgan.value) || 0;
-      const w = parseFloat(deedWah.value) || 0;
-      const totalWah = (r * WAH_PER_RAI) + (n * WAH_PER_NGAN) + w;
-      state.totalSqm = totalWah * SQM_PER_WAH;
-      document.getElementById('inputTotalWah').value = totalWah;
-      document.getElementById('inputTotalSqm').value = state.totalSqm;
-      autoBalanceDimensions();
-      updateChipMeta();
-      recalculateFeasibility();
-    });
+    el.addEventListener('input', calculateFromDeed);
+    el.addEventListener('change', normalizeDeedInputs);
+    el.addEventListener('blur', normalizeDeedInputs);
   });
 
   // 8.5 Input Total Sqm
@@ -730,19 +918,22 @@ function updateDimensionLabels() {
   document.getElementById('aspectRatioLabel').textContent = ratio;
 }
 
-function updateChipMeta() {
+function updateChipMeta(syncInputs = true) {
   const wah = state.totalSqm / SQM_PER_WAH;
-  const rai = Math.floor(wah / WAH_PER_RAI);
-  const remWahAfterRai = wah - (rai * WAH_PER_RAI);
+  const roundedWah = Math.round(wah * 10) / 10;
+  const rai = Math.floor(roundedWah / WAH_PER_RAI);
+  const remWahAfterRai = Math.round((roundedWah - (rai * WAH_PER_RAI)) * 10) / 10;
   const ngan = Math.floor(remWahAfterRai / WAH_PER_NGAN);
-  const w = remWahAfterRai - (ngan * WAH_PER_NGAN);
+  const w = Math.round((remWahAfterRai - (ngan * WAH_PER_NGAN)) * 10) / 10;
 
   document.getElementById('chipSqm').textContent = `${fmt(state.totalSqm, 2)} ตร.ม.`;
   document.getElementById('chipDeed').textContent = `${rai} ไร่ ${ngan} งาน ${fmt(w, 1)} ตร.ว.`;
 
-  document.getElementById('deedRai').value = rai;
-  document.getElementById('deedNgan').value = ngan;
-  document.getElementById('deedWah').value = parseFloat(w.toFixed(1));
+  if (syncInputs) {
+    document.getElementById('deedRai').value = rai;
+    document.getElementById('deedNgan').value = ngan;
+    document.getElementById('deedWah').value = w;
+  }
 }
 
 // --- 9. Bootstrap on DOM Ready ---

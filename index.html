@@ -107,7 +107,7 @@
             </div>
             <div class="deed-col">
               <label for="deedWah">ตร.วา</label>
-              <input type="number" step="any" min="0" id="deedWah" value="50" class="sub-input">
+              <input type="number" step="any" min="0" max="99.9" id="deedWah" value="50" class="sub-input">
             </div>
           </div>
         </div>
@@ -306,6 +306,20 @@
       <div class="panel-section-header">
         <span class="panel-badge">FEASIBILITY BOARD</span>
         <h2>ผังวิเคราะห์และขอบเขตพื้นที่ก่อสร้าง (Schematic & Metrics)</h2>
+      </div>
+
+      <!-- Road Gatekeeper Alert Banner (3 Status: Pass, Warning, Violation) -->
+      <div class="road-gatekeeper-banner pass" id="roadGatekeeperBanner">
+        <div class="gatekeeper-icon-box" id="gatekeeperIconBox">
+          <svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div class="gatekeeper-text-group">
+          <div class="gatekeeper-title-row">
+            <span class="gatekeeper-pill" id="gatekeeperPill">ผ่านเกณฑ์</span>
+            <span class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางถนนสาธารณะ</span>
+          </div>
+          <p class="gatekeeper-desc" id="gatekeeperDesc">ถนนกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคาร สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมือง</p>
+        </div>
       </div>
 
       <!-- Hero Metric Tiles (4 ค่าหลัก) -->
