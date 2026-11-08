@@ -5,3 +5,5 @@ Thumbs.db
 node_modules/
 test_runner.py
 *.py
+
+.vercel

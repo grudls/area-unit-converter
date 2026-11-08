@@ -26,16 +26,6 @@
       </div>
     </div>
 
-    <!-- Center Segmented Capsule Presets -->
-    <div class="topbar-center">
-      <div class="segmented-capsule" role="radiogroup" aria-label="Quick Parcel Presets">
-        <button class="capsule-btn active" data-preset="50wah">50 ตร.ว. (บ้านเดี่ยว)</button>
-        <button class="capsule-btn" data-preset="100wah">100 ตร.ว. (พาณิชย์/ทาวน์)</button>
-        <button class="capsule-btn" data-preset="1rai">1 ไร่ (สำนักงาน)</button>
-        <button class="capsule-btn" data-preset="3rai">3 ไร่ (คอนโด/ขนาดใหญ่)</button>
-      </div>
-    </div>
-
     <!-- Right Controls -->
     <div class="topbar-right">
       <button class="tactile-btn secondary" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น">
@@ -325,14 +315,14 @@
       <!-- Hero Metric Tiles (4 ค่าหลัก) -->
       <div class="hero-metric-grid">
         <!-- Tile 1: Max GFA -->
-        <div class="metric-tile">
+        <div class="metric-tile" id="tileGfa">
           <div class="tile-header">
             <span class="tile-code">GFA // FAR</span>
-            <span class="tile-tag">MAX ALLOWED</span>
+            <span class="tile-tag" id="tagGfa">MAX ALLOWED</span>
           </div>
           <div class="tile-metric-value" id="valMaxGfa">200.0</div>
           <div class="tile-metric-unit">ตารางเมตร (SQ.M.)</div>
-          <div class="tile-footer-note">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
+          <div class="tile-footer-note" id="noteGfa">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
         </div>
 
         <!-- Tile 2: Max Footprint -->

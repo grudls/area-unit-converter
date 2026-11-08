@@ -146,11 +146,39 @@ function recalculateFeasibility() {
   // 4.4 Max Estimated Floors
   const estFloors = Math.max(1, Math.floor(setbacks.heightLimitMeters / 3.2));
 
-  // --- Update Road Gatekeeper Alert Banner ---
-  updateRoadGatekeeperBanner(setbacks, zone);
+  // --- Update Road Gatekeeper Alert Banner & GFA Tile State ---
+  const bannerStatus = updateRoadGatekeeperBanner(setbacks, zone);
+
+  const valMaxGfaEl = document.getElementById('valMaxGfa');
+  const tileGfaEl = document.getElementById('tileGfa');
+  const tagGfaEl = document.getElementById('tagGfa');
+  const noteGfaEl = document.getElementById('noteGfa');
+
+  if (bannerStatus === 'violation') {
+    valMaxGfaEl.classList.add('gfa-violation');
+    if (tileGfaEl) tileGfaEl.classList.add('tile-violation');
+    if (tagGfaEl) tagGfaEl.textContent = 'PROHIBITED';
+    if (noteGfaEl) noteGfaEl.textContent = '⛔ ไม่อนุญาตให้ก่อสร้าง (ขัดต่อกฎกระทรวง)';
+  } else if (bannerStatus === 'warning') {
+    valMaxGfaEl.classList.remove('gfa-violation');
+    if (tileGfaEl) tileGfaEl.classList.remove('tile-violation');
+    if (tagGfaEl) tagGfaEl.textContent = 'RESTRICTED';
+    if (noteGfaEl) {
+      if (state.roadWidth < 6.0) {
+        noteGfaEl.textContent = '⚠️ จำกัดพื้นที่อาคารรวมไม่เกิน 2,000 ตร.ม. (ข้อ 54)';
+      } else {
+        noteGfaEl.textContent = '⚠️ มีเงื่อนไขข้อจำกัดขนาดอาคารตามเขตทาง';
+      }
+    }
+  } else {
+    valMaxGfaEl.classList.remove('gfa-violation');
+    if (tileGfaEl) tileGfaEl.classList.remove('tile-violation');
+    if (tagGfaEl) tagGfaEl.textContent = 'MAX ALLOWED';
+    if (noteGfaEl) noteGfaEl.textContent = 'พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR';
+  }
 
   // --- Update Hero Metric Tiles ---
-  document.getElementById('valMaxGfa').textContent = fmt(maxGfa, 1);
+  valMaxGfaEl.textContent = fmt(maxGfa, 1);
   document.getElementById('valMaxFootprint').textContent = fmt(legalFootprint, 1);
   document.getElementById('valMinOpenSpace').textContent = fmt(minOpenSpace, 1);
   document.getElementById('valHeightLimit').textContent = `${fmt(setbacks.heightLimitMeters, 1)} ม. (~${estFloors} ชั้น)`;
@@ -199,7 +227,7 @@ function updateRoadGatekeeperBanner(setbacks, zone) {
   const title = document.getElementById('gatekeeperTitle');
   const desc = document.getElementById('gatekeeperDesc');
 
-  if (!banner || !iconBox || !pill || !title || !desc) return;
+  if (!banner || !iconBox || !pill || !title || !desc) return 'pass';
 
   const road = state.roadWidth;
   const typo = state.typology;
@@ -211,48 +239,48 @@ function updateRoadGatekeeperBanner(setbacks, zone) {
   const typoName = typoNames[typo] || 'อาคารพักอาศัย';
 
   let status = 'pass';
-  let pillText = 'ผ่านเกณฑ์';
-  let titleText = 'ผ่านเกณฑ์ความกว้างเขตทางถนนสาธารณะ';
-  let descText = `ถนนกว้าง ${fmt(road, 1)} ม. สอดคล้องตามเกณฑ์ควบคุมอาคารสำหรับ${typoName} สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น`;
+  let pillText = '✓ ถูกต้องตามกฎหมาย';
+  let titleText = '✓ ถูกต้องตามกฎหมาย: ผ่านเกณฑ์ความกว้างเขตทางสำหรับประเภทอาคารที่เลือก';
+  let descText = `ถนนสาธารณะกว้าง ${fmt(road, 1)} ม. สอดคล้องตามเกณฑ์ควบคุมอาคารสำหรับ${typoName} สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น`;
   let iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
 
-  // 1. Error / Violation (สร้างไม่ได้)
+  // 1. Error / Violation (สร้างไม่ได้ - ผิดกฎหมาย)
   if (typo === 'highrise' && road < 10.0) {
     status = 'violation';
-    pillText = 'สร้างไม่ได้';
-    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: เขตทางถนนน้อยกว่า 10.00 ม. ไม่สามารถสร้างอาคารขนาดใหญ่/อาคารสูงได้ (กฎกระทรวง ฉบับที่ 33)';
-    descText = `ตามกฎกระทรวง ฉบับที่ 33 อาคารสูงหรืออาคารขนาดใหญ่พิเศษต้องมีเขตทางถนนสาธารณะกว้างไม่น้อยกว่า 10.00 ม. เชื่อมต่อไปยังถนนสาธารณะสายหลัก (ปัจจุบันถนนกว้าง ${fmt(road, 1)} ม.)`;
+    pillText = '⛔ ผิดกฎหมาย';
+    titleText = `⛔ ผิดกฎหมาย: ไม่สามารถก่อสร้างอาคารประเภทนี้ได้ เนื่องจากเขตทางถนนสาธารณะกว้างเพียง ${fmt(road, 1)} ม. (ขั้นต่ำต้องไม่น้อยกว่า 10.00 ม. ตามกฎกระทรวง ฉบับที่ 33)`;
+    descText = `ตามกฎกระทรวง ฉบับที่ 33 อาคารสูงหรืออาคารขนาดใหญ่พิเศษต้องมีเขตทางถนนสาธารณะกว้างไม่น้อยกว่า 10.00 ม. เชื่อมต่อไปยังถนนสาธารณะสายหลักที่มีเขตทางกว้างกว่า`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
   } else if (setbacks.buildWidth <= 0 || setbacks.buildDepth <= 0) {
     status = 'violation';
-    pillText = 'สร้างไม่ได้';
-    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: ระยะร่นตามกฎหมายกินพื้นที่เกินขนาดแปลงที่ดิน';
+    pillText = '⛔ ผิดกฎหมาย';
+    titleText = '⛔ ผิดกฎหมาย: ไม่สามารถก่อสร้างได้ เนื่องจากระยะร่นตามกฎหมายกินพื้นที่เกินขนาดแปลงที่ดิน';
     descText = `ขนาดที่ดิน ${fmt(state.widthMeters, 1)} × ${fmt(state.depthMeters, 1)} ม. เมื่อหักระยะร่นรอบแปลงแล้วไม่มีพื้นที่เหลือเพียงพอสำหรับก่อสร้างอาคาร`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
   } else if (typo === 'shophouse' && road < 4.0) {
     status = 'violation';
-    pillText = 'สร้างไม่ได้';
-    titleText = 'ตรวจพบข้อห้ามทางกฎหมาย: เขตทางถนนน้อยกว่า 4.00 ม. ไม่สามารถสร้างอาคารพาณิชย์/ตึกแถวได้ (กฎกระทรวง ฉบับที่ 55 ข้อ 36)';
+    pillText = '⛔ ผิดกฎหมาย';
+    titleText = `⛔ ผิดกฎหมาย: ไม่สามารถสร้างอาคารพาณิชย์/ตึกแถวได้ เนื่องจากเขตทางถนนกว้างเพียง ${fmt(road, 1)} ม. (ขั้นต่ำต้องไม่น้อยกว่า 4.00 ม. ตามกฎกระทรวง ฉบับที่ 55 ข้อ 36)`;
     descText = `อาคารพาณิชย์หรือตึกแถวต้องอยู่ติดถนนสาธารณะที่มีเขตทางกว้างไม่น้อยกว่า 4.00 ม. (ปัจจุบัน ${fmt(road, 1)} ม.)`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`;
   }
   // 2. Warning (ติดเงื่อนไข)
   else if (road < 6.0) {
     status = 'warning';
-    pillText = 'ติดเงื่อนไข';
-    titleText = 'จำกัดพื้นที่อาคารรวมไม่เกิน 2,000 ตร.ม. (ข้อ 54)';
-    descText = `ถนนสาธารณะแคบกว่า 6.00 ม. (ปัจจุบัน ${fmt(road, 1)} ม.) ตามกฎกระทรวง ฉบับที่ 55 ข้อ 54 ห้ามสร้างอาคารพาณิชย์ขนาดใหญ่หรืออาคารอยู่อาศัยรวม และต้องร่นจากกึ่งกลางถนนไม่น้อยกว่า 3.00 ม.`;
+    pillText = '⚠️ ติดเงื่อนไข';
+    titleText = 'ติดเงื่อนไข: จำกัดพื้นที่อาคารรวมไม่เกิน 2,000 ตร.ม. (ข้อ 54)';
+    descText = `ซอยหรือถนนสาธารณะแคบกว่า 6.00 ม. (ปัจจุบัน ${fmt(road, 1)} ม.) ตามกฎกระทรวง ฉบับที่ 55 ข้อ 54 ห้ามสร้างอาคารพาณิชย์ขนาดใหญ่หรืออาคารอยู่อาศัยรวม และต้องร่นจากกึ่งกลางถนนไม่น้อยกว่า 3.00 ม.`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
   } else if (typo === 'highrise' && road >= 10.0 && road < 18.0) {
     status = 'warning';
-    pillText = 'ติดเงื่อนไข';
-    titleText = 'จำกัดพื้นที่อาคารรวมไม่เกิน 10,000 ตร.ม. (เขตทาง 10 - 18 ม.)';
+    pillText = '⚠️ ติดเงื่อนไข';
+    titleText = 'ติดเงื่อนไข: จำกัดพื้นที่อาคารรวมไม่เกิน 10,000 ตร.ม. (เขตทาง 10 - 18 ม.)';
     descText = `หากพัฒนาเป็นอาคารขนาดใหญ่พิเศษเกิน 10,000 ตร.ม. ต้องอยู่ติดถนนสาธารณะกว้างตั้งแต่ 18.00 ม. ขึ้นไป (ปัจจุบัน ${fmt(road, 1)} ม. สามารถสร้างได้ไม่เกินเกณฑ์ 10,000 ตร.ม.)`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
   } else if (setbacks.buildWidth < 4.0) {
     status = 'warning';
-    pillText = 'ติดเงื่อนไข';
-    titleText = `หน้ากว้างอาคารก่อสร้างได้แคบมาก (${fmt(setbacks.buildWidth, 2)} ม.)`;
+    pillText = '⚠️ ติดเงื่อนไข';
+    titleText = `ติดเงื่อนไข: หน้ากว้างอาคารก่อสร้างได้แคบมาก (${fmt(setbacks.buildWidth, 2)} ม.)`;
     descText = `ระยะร่นด้านข้างทำให้เหลือความกว้างก่อสร้างน้อยกว่า 4.00 ม. ควรพิจารณาทำผนังทึบชิดเขตที่ดินโดยได้รับความยินยอมเป็นหนังสือ`;
     iconSvg = `<svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`;
   }
@@ -262,6 +290,8 @@ function updateRoadGatekeeperBanner(setbacks, zone) {
   title.textContent = titleText;
   desc.textContent = descText;
   iconBox.innerHTML = iconSvg;
+
+  return status;
 }
 
 // --- 5. Valuation Calculation ---
@@ -558,57 +588,7 @@ function renderSchematicSvg(setbacks) {
 
 // --- 8. Event Listeners & Interactive Handlers ---
 function initEventListeners() {
-  // 8.1 Segmented Presets (Top bar)
-  const presets = {
-    '50wah': { wah: 50, width: 10, depth: 20, road: 6, zone: 'Y1', typo: 'residential' },
-    '100wah': { wah: 100, width: 16, depth: 25, road: 10, zone: 'Y4', typo: 'shophouse' },
-    '1rai': { wah: 400, width: 32, depth: 50, road: 12, zone: 'Y7', typo: 'residential' },
-    '3rai': { wah: 1200, width: 50, depth: 96, road: 16, zone: 'C3', typo: 'highrise' }
-  };
-
-  document.querySelectorAll('[data-preset]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('[data-preset]').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
-      const pKey = btn.getAttribute('data-preset');
-      const p = presets[pKey];
-      if (!p) return;
-
-      state.totalSqm = p.wah * SQM_PER_WAH;
-      state.widthMeters = p.width;
-      state.depthMeters = p.depth;
-      state.roadWidth = p.road;
-      state.zoneKey = p.zone;
-      state.typology = p.typo;
-
-      // Update Form Inputs
-      document.getElementById('inputTotalWah').value = p.wah;
-      document.getElementById('inputTotalSqm').value = state.totalSqm;
-      document.getElementById('inputPlotWidth').value = p.width;
-      document.getElementById('inputPlotDepth').value = p.depth;
-      document.getElementById('roadWidthSlider').value = p.road;
-      document.getElementById('roadCurrentBadge').textContent = `${fmt(p.road, 1)} เมตร`;
-      document.getElementById('zoneSelect').value = p.zone;
-
-      // Update road pill
-      document.querySelectorAll('#roadPillRow .tactile-pill').forEach(pill => {
-        pill.classList.toggle('active', parseFloat(pill.getAttribute('data-road')) === p.road);
-      });
-
-      // Update typo pill
-      document.querySelectorAll('#typologyGrid .typo-pill').forEach(pill => {
-        pill.classList.toggle('active', pill.getAttribute('data-typo')) === p.typo;
-      });
-
-      updateDimensionLabels();
-      updateChipMeta();
-      recalculateFeasibility();
-      showToast(`โหลด Preset: ${btn.textContent}`);
-    });
-  });
-
-  // 8.2 Unit Mode Switcher (Wah / Deed / Sqm)
+  // 8.1 Unit Mode Switcher (Wah / Deed / Sqm)
   document.querySelectorAll('[data-unit-mode]').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('[data-unit-mode]').forEach(b => b.classList.remove('active'));
@@ -865,8 +845,34 @@ function initEventListeners() {
 
   // 8.15 Reset Button
   document.getElementById('resetWorkspaceBtn').addEventListener('click', () => {
-    const btn = document.querySelector('[data-preset="50wah"]');
-    if (btn) btn.click();
+    state.totalSqm = 200.0;
+    state.widthMeters = 10.0;
+    state.depthMeters = 20.0;
+    state.roadWidth = 6.0;
+    state.zoneKey = 'Y1';
+    state.typology = 'residential';
+    state.priceRate = 65000;
+    state.priceMode = 'perWah';
+
+    document.getElementById('inputTotalWah').value = 50;
+    document.getElementById('inputTotalSqm').value = 200;
+    document.getElementById('inputPlotWidth').value = 10;
+    document.getElementById('inputPlotDepth').value = 20;
+    document.getElementById('roadWidthSlider').value = 6;
+    document.getElementById('roadCurrentBadge').textContent = '6.0 เมตร';
+    document.getElementById('zoneSelect').value = 'Y1';
+
+    document.querySelectorAll('#roadPillRow .tactile-pill').forEach(pill => {
+      pill.classList.toggle('active', parseFloat(pill.getAttribute('data-road')) === 6.0);
+    });
+
+    document.querySelectorAll('#typologyGrid .typo-pill').forEach(pill => {
+      pill.classList.toggle('active', pill.getAttribute('data-typo') === 'residential');
+    });
+
+    autoBalanceDimensions();
+    updateChipMeta();
+    recalculateFeasibility();
     showToast('รีเซ็ตพารามิเตอร์ทั้งหมดเป็นค่าเริ่มต้น');
   });
 
