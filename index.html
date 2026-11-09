@@ -3,573 +3,711 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>ARCH // STUDIO — Land Feasibility & Schematic Workspace</title>
+  <title>ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=2.5">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.0">
 </head>
 <body>
 
-  <!-- Top Bar: Studio Workspace Header -->
-  <header class="studio-topbar">
-    <div class="topbar-left">
-      <div class="studio-monogram">
-        <span class="mono-symbol">📐</span>
-      </div>
-      <div class="studio-brand-meta">
-        <div class="studio-title-row">
-          <span class="studio-brand">ARCH // STUDIO</span>
-          <span class="studio-tag">FEASIBILITY v2.4</span>
-        </div>
-        <p class="studio-subtitle">Land Converter & Architectural Envelope Workspace</p>
-      </div>
+  <!-- ========================================================================
+       1. CINEMATIC ENTRY LANDING VIEW (Apple Intelligence Glow + Runway Typography)
+       ======================================================================== -->
+  <section class="landing-overlay" id="landingView" aria-label="ARCH // STUDIO Intro">
+    <!-- Ambient Apple Intelligence Multi-Tone Horizon Glow -->
+    <div class="landing-ambient-glow" aria-hidden="true">
+      <div class="glow-orb orb-cyan"></div>
+      <div class="glow-orb orb-violet"></div>
+      <div class="glow-orb orb-amber"></div>
+      <div class="landing-grid-mesh"></div>
     </div>
 
-    <!-- Right Controls -->
-    <div class="topbar-right">
-      <button class="tactile-btn secondary" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        <span class="btn-label-desktop">รีเซ็ต</span>
-      </button>
+    <!-- Landing Minimal Top Navigation -->
+    <nav class="landing-nav">
+      <div class="landing-brand-pill">
+        <span class="landing-logo-mark">📐</span>
+        <span class="landing-logo-text">ARCH // STUDIO</span>
+        <span class="landing-version-tag">STUDIO 3.0</span>
+      </div>
 
-      <button class="tactile-btn primary" id="copySummaryBtn" title="คัดลอกสรุปศักยภาพที่ดิน">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-        <span class="btn-label-desktop">คัดลอกสรุป</span>
-      </button>
+      <div class="landing-nav-right">
+        <div class="lang-switcher landing-lang" role="group" aria-label="Language Switcher">
+          <button type="button" class="lang-btn active" data-lang-switch="th">TH</button>
+          <button type="button" class="lang-btn" data-lang-switch="en">EN</button>
+        </div>
+      </div>
+    </nav>
 
-      <button class="icon-toggle-btn" id="themeToggleBtn" title="สลับโหมดสว่าง/มืด (Studio Dark/Light)">
-        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-      </button>
+    <!-- Landing Center Hero Content -->
+    <div class="landing-hero-container">
+      <!-- Animated Isometric Architectural Wireframe Backdrop / Preview -->
+      <div class="landing-wireframe-stage" aria-hidden="true">
+        <svg class="landing-iso-svg" viewBox="0 0 760 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="wireTowerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#38BDF8" stop-opacity="0.55"/>
+              <stop offset="50%" stop-color="#818CF8" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#F472B6" stop-opacity="0.20"/>
+            </linearGradient>
+            <linearGradient id="wireSetbackGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#F43F5E" stop-opacity="0.35"/>
+              <stop offset="100%" stop-color="#FB923C" stop-opacity="0.15"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Isometric Ground Plot Boundary -->
+          <g class="wire-ground-group">
+            <polygon points="380,105 575,215 380,325 185,215" stroke="rgba(255,255,255,0.28)" stroke-width="1.5" fill="rgba(255,255,255,0.02)"/>
+            <!-- Setback Perimeter Zone -->
+            <polygon points="380,128 535,215 380,302 225,215" stroke="rgba(244,63,94,0.65)" stroke-width="1.3" stroke-dasharray="5 4" fill="url(#wireSetbackGrad)"/>
+            <!-- Buildable Envelope Base -->
+            <polygon points="380,148 498,215 380,282 262,215" stroke="#34D399" stroke-width="1.6" fill="rgba(16,185,129,0.08)"/>
+            <!-- Foreground Public Road Strip -->
+            <polygon points="185,215 380,325 342,348 147,238" stroke="rgba(148,163,184,0.35)" stroke-width="1.1" fill="rgba(148,163,184,0.06)"/>
+            <line x1="166" y1="226" x2="361" y2="336" stroke="rgba(255,255,255,0.3)" stroke-width="1.2" stroke-dasharray="7 6"/>
+          </g>
+
+          <!-- Animated Parametric 3D Tower Wireframe -->
+          <g class="wire-tower-group">
+            <!-- Left Extruded Face -->
+            <polygon points="262,215 380,282 380,96 262,29" fill="url(#wireTowerGrad)" fill-opacity="0.22" stroke="rgba(255,255,255,0.65)" stroke-width="1.4"/>
+            <!-- Right Extruded Face -->
+            <polygon points="380,282 498,215 498,29 380,96" fill="url(#wireTowerGrad)" fill-opacity="0.14" stroke="rgba(255,255,255,0.5)" stroke-width="1.4"/>
+            <!-- Roof Cap -->
+            <polygon points="380,-38 498,29 380,96 262,29" fill="rgba(255,255,255,0.12)" stroke="#FFFFFF" stroke-width="1.7"/>
+            <!-- Animated Floor Slices -->
+            <polyline points="262,184 380,251 498,184" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+            <polyline points="262,153 380,220 498,153" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+            <polyline points="262,122 380,189 498,122" stroke="rgba(56,189,248,0.55)" stroke-width="1.3"/>
+            <polyline points="262,91 380,158 498,91" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+            <polyline points="262,60 380,127 498,60" stroke="rgba(255,255,255,0.28)" stroke-width="1"/>
+          </g>
+
+          <!-- Architectural Dimension Guides & Nodes -->
+          <g class="wire-guides-group">
+            <line x1="236" y1="29" x2="236" y2="215" stroke="#38BDF8" stroke-width="1.3" stroke-dasharray="3 3"/>
+            <circle cx="236" cy="29" r="3.5" fill="#38BDF8"/>
+            <circle cx="236" cy="215" r="3.5" fill="#38BDF8"/>
+            <rect x="132" y="108" width="92" height="24" rx="12" fill="rgba(15,23,42,0.85)" stroke="rgba(56,189,248,0.6)" stroke-width="1"/>
+            <text x="178" y="124" text-anchor="middle" fill="#E0F2FE" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">H = 2.0 × ROW</text>
+
+            <rect x="492" y="198" width="128" height="24" rx="12" fill="rgba(15,23,42,0.85)" stroke="rgba(244,63,94,0.65)" stroke-width="1"/>
+            <text x="556" y="214" text-anchor="middle" fill="#FFE4E6" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="600">SETBACK 6.0 M</text>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Eyebrow Badge -->
+      <div class="landing-eyebrow">
+        <span class="eyebrow-dot"></span>
+        <span id="landingEyebrowText">ARCHITECTURAL CODE &amp; MASSING ENGINE</span>
+      </div>
+
+      <!-- Main Title -->
+      <h1 class="landing-title">
+        <span class="landing-title-gradient">ARCH // STUDIO</span>
+        <span class="landing-title-sub" id="landingTitleSub">Bangkok Zoning &amp; 3D Envelope Simulator</span>
+      </h1>
+
+      <!-- Bilingual Tagline -->
+      <p class="landing-tagline-th" id="landingTaglinePrimary">
+        จำลองศักยภาพที่ดิน กฎหมายควบคุมอาคาร และมวลปริมาตร 3 มิติแบบเรียลไทม์
+      </p>
+      <p class="landing-tagline-en" id="landingTaglineSecondary">
+        Simulate Bangkok Building Codes &amp; 3D Massing in Real-Time
+      </p>
+
+      <!-- Primary Launch Studio CTA Pill -->
+      <div class="landing-cta-group">
+        <button type="button" class="launch-studio-btn" id="launchStudioBtn">
+          <span class="launch-btn-text" id="launchStudioBtnText">เข้าสู่สตูดิโอทำงาน (Launch Studio)</span>
+          <span class="launch-btn-arrow">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </span>
+        </button>
+      </div>
+
+      <!-- Spec Feature Pills -->
+      <div class="landing-feature-strip">
+        <span class="landing-spec-chip" id="landingChip1">ผังเมืองรวม กทม. (FAR / OSR / BCR)</span>
+        <span class="landing-spec-chip" id="landingChip2">กฎกระทรวง ฉบับที่ 33 &amp; 55</span>
+        <span class="landing-spec-chip" id="landingChip3">Interactive 3D Isometric &amp; 2D CAD</span>
+      </div>
     </div>
-  </header>
+  </section>
 
-  <!-- Workspace 2-Column Grid -->
-  <main class="workspace-grid">
+  <!-- ========================================================================
+       2. RUNWAY STUDIO WORKSPACE + APPLE MINIMALIST DESIGN
+       ======================================================================== -->
+  <div class="studio-app-shell" id="studioWorkspace">
 
-    <!-- LEFT COLUMN: Control & Inspector Panel (~38%) -->
-    <aside class="inspector-column">
-      <div class="panel-section-header">
-        <span class="panel-badge">INSPECTOR</span>
-        <h2>พารามิเตอร์ที่ดินและกฎหมาย</h2>
+    <!-- Top Bar: Studio Workspace Header -->
+    <header class="studio-topbar">
+      <div class="topbar-left">
+        <div class="studio-monogram" id="reopenLandingBtn" title="เปิดหน้าแนะนำ (Intro View)">
+          <span class="mono-symbol">📐</span>
+        </div>
+        <div class="studio-brand-meta">
+          <div class="studio-title-row">
+            <span class="studio-brand">ARCH // STUDIO</span>
+            <span class="studio-tag" id="topbarVersionTag">STUDIO v3.0</span>
+          </div>
+          <p class="studio-subtitle" id="topbarSubtitle">Bangkok Zoning &amp; 3D Envelope Simulator</p>
+        </div>
       </div>
 
-      <!-- Card 1: แปลงหน่วยและมิติแปลงที่ดิน (Parcel Dimensions & Area) -->
-      <section class="inspector-card">
-        <div class="card-bar">
-          <div class="card-caption">
-            <span class="caption-index">01</span>
-            <span class="caption-title">ขนาดแปลงและมิติที่ดิน (Parcel Area)</span>
-          </div>
-          <!-- Mode switcher -->
-          <div class="mini-tab-group" id="unitModeGroup">
-            <button class="mini-tab active" data-unit-mode="wah">ตร.วา</button>
-            <button class="mini-tab" data-unit-mode="deed">ไร่-งาน-วา</button>
-            <button class="mini-tab" data-unit-mode="sqm">ตร.ม.</button>
-          </div>
+      <!-- Right Controls: Language Switcher [ TH | EN ], Reset, Copy, Theme -->
+      <div class="topbar-right">
+        <!-- Seamless TH / EN Bilingual Switcher -->
+        <div class="lang-switcher" id="topbarLangSwitcher" role="group" aria-label="สลับภาษา TH / EN">
+          <button type="button" class="lang-btn active" data-lang-switch="th" id="btnLangTh">TH</button>
+          <button type="button" class="lang-btn" data-lang-switch="en" id="btnLangEn">EN</button>
         </div>
 
-        <!-- Mode A: ตารางวา (Default) -->
-        <div class="unit-mode-content" id="modeWahContent">
-          <div class="numeric-field-hero">
-            <label for="inputTotalWah">ขนาดที่ดินรวม</label>
-            <div class="input-with-suffix">
-              <input type="number" step="any" min="1" id="inputTotalWah" value="50" class="hero-input">
-              <span class="input-suffix">ตร.ว.</span>
-            </div>
-          </div>
+        <button class="tactile-btn secondary" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span class="btn-label-desktop" id="labelResetBtn">รีเซ็ต</span>
+        </button>
+
+        <button class="tactile-btn primary" id="copySummaryBtn" title="คัดลอกสรุปศักยภาพที่ดิน">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span class="btn-label-desktop" id="labelCopyBtn">คัดลอกสรุป</span>
+        </button>
+
+        <button class="icon-toggle-btn" id="themeToggleBtn" title="สลับโหมดสว่าง/มืด (Studio Dark/Light)">
+          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Studio 2-Column App Layout: Left Tool Panel (~360px) + Center Hero Stage (~70%+) -->
+    <main class="workspace-grid">
+
+      <!-- LEFT COLUMN: Clean Tool Panel (~360px, Independently Scrollable) -->
+      <aside class="inspector-column" aria-label="Parameter Inspector">
+        <div class="panel-section-header">
+          <span class="panel-badge" id="badgeInspector">PARAMETERS</span>
+          <h2 id="headingInspector">พารามิเตอร์ที่ดินและกฎหมาย</h2>
         </div>
 
-        <!-- Mode B: โฉนดที่ดิน ไร่-งาน-วา -->
-        <div class="unit-mode-content hidden" id="modeDeedContent">
-          <div class="deed-tri-inputs">
-            <div class="deed-col">
-              <label for="deedRai">ไร่</label>
-              <input type="number" min="0" id="deedRai" value="0" class="sub-input">
+        <!-- Card 1: ขนาดแปลงและมิติที่ดิน (Parcel Dimensions & Area) -->
+        <section class="inspector-card">
+          <div class="card-bar">
+            <div class="card-caption">
+              <span class="caption-index">01</span>
+              <span class="caption-title" id="titleCard01">ขนาดแปลงและมิติที่ดิน</span>
             </div>
-            <div class="deed-col">
-              <label for="deedNgan">งาน</label>
-              <input type="number" min="0" max="3" id="deedNgan" value="0" class="sub-input">
-            </div>
-            <div class="deed-col">
-              <label for="deedWah">ตร.วา</label>
-              <input type="number" step="any" min="0" max="99.9" id="deedWah" value="50" class="sub-input">
-            </div>
-          </div>
-        </div>
-
-        <!-- Mode C: ตารางเมตร -->
-        <div class="unit-mode-content hidden" id="modeSqmContent">
-          <div class="numeric-field-hero">
-            <label for="inputTotalSqm">พื้นที่รวม (ตารางเมตร)</label>
-            <div class="input-with-suffix">
-              <input type="number" step="any" min="1" id="inputTotalSqm" value="200" class="hero-input">
-              <span class="input-suffix">ตร.ม.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Live Converted Area Summary Chips (Visible in All Unit Modes) -->
-        <div class="field-meta-chips" style="margin-top: 8px;">
-          <span class="meta-chip" id="chipSqm">200.00 ตร.ม.</span>
-          <span class="meta-chip" id="chipWah">50 ตร.ว.</span>
-          <span class="meta-chip" id="chipDeed">0 ไร่ 0 งาน 50 ตร.ว.</span>
-        </div>
-
-        <!-- Aspect Ratio & Width/Depth in Meters -->
-        <div class="dimension-row">
-          <div class="dimension-col">
-            <div class="dim-label-row">
-              <label for="inputPlotWidth">หน้ากว้างที่ดิน (W)</label>
-              <span class="dim-tag" id="tagPlotWidth">10.00 ม.</span>
-            </div>
-            <div class="input-with-suffix compact">
-              <input type="number" step="0.5" min="2" id="inputPlotWidth" value="10" class="sub-input">
-              <span class="input-suffix">ม.</span>
+            <!-- Mode switcher -->
+            <div class="mini-tab-group" id="unitModeGroup">
+              <button class="mini-tab active" data-unit-mode="wah" id="tabUnitWah">ตร.วา</button>
+              <button class="mini-tab" data-unit-mode="deed" id="tabUnitDeed">ไร่-งาน-วา</button>
+              <button class="mini-tab" data-unit-mode="sqm" id="tabUnitSqm">ตร.ม.</button>
             </div>
           </div>
 
-          <div class="dimension-col">
-            <div class="dim-label-row">
-              <label for="inputPlotDepth">ความลึกที่ดิน (D)</label>
-              <span class="dim-tag" id="tagPlotDepth">20.00 ม.</span>
+          <!-- Mode A: ตารางวา (Default) -->
+          <div class="unit-mode-content" id="modeWahContent">
+            <div class="numeric-field-hero">
+              <label for="inputTotalWah" id="labelTotalWah">ขนาดที่ดินรวม</label>
+              <div class="input-with-suffix">
+                <input type="number" step="any" min="1" id="inputTotalWah" value="50" class="hero-input">
+                <span class="input-suffix" id="suffixWah">ตร.ว.</span>
+              </div>
             </div>
-            <div class="input-with-suffix compact">
-              <input type="number" step="0.5" min="2" id="inputPlotDepth" value="20" class="sub-input">
-              <span class="input-suffix">ม.</span>
+          </div>
+
+          <!-- Mode B: โฉนดที่ดิน ไร่-งาน-วา -->
+          <div class="unit-mode-content hidden" id="modeDeedContent">
+            <div class="deed-tri-inputs">
+              <div class="deed-col">
+                <label for="deedRai" id="labelDeedRai">ไร่</label>
+                <input type="number" min="0" id="deedRai" value="0" class="sub-input">
+              </div>
+              <div class="deed-col">
+                <label for="deedNgan" id="labelDeedNgan">งาน</label>
+                <input type="number" min="0" max="3" id="deedNgan" value="0" class="sub-input">
+              </div>
+              <div class="deed-col">
+                <label for="deedWah" id="labelDeedWah">ตร.วา</label>
+                <input type="number" step="any" min="0" max="99.9" id="deedWah" value="50" class="sub-input">
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class="aspect-link-bar">
-          <button class="aspect-sync-btn" id="syncAspectBtn" title="คำนวณความลึกให้สัมพันธ์กับพื้นที่">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
-            <span>อัตราส่วน W:D = 1:<span id="aspectRatioLabel">2.0</span> (คลิกเพื่อปรับสมดุล)</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- Card 2: เขตทางและถนนสาธารณะ (Road Width) -->
-      <section class="inspector-card">
-        <div class="card-bar">
-          <div class="card-caption">
-            <span class="caption-index">02</span>
-            <span class="caption-title">ความกว้างเขตทาง / ถนนสาธารณะ</span>
+          <!-- Mode C: ตารางเมตร -->
+          <div class="unit-mode-content hidden" id="modeSqmContent">
+            <div class="numeric-field-hero">
+              <label for="inputTotalSqm" id="labelTotalSqm">พื้นที่รวม (ตารางเมตร)</label>
+              <div class="input-with-suffix">
+                <input type="number" step="any" min="4" id="inputTotalSqm" value="200" class="hero-input">
+                <span class="input-suffix" id="suffixSqm">ตร.ม.</span>
+              </div>
+            </div>
           </div>
-          <span class="road-current-badge" id="roadCurrentBadge">6.00 เมตร</span>
-        </div>
 
-        <!-- Road Slider & Direct Input -->
-        <div class="road-control-wrap">
-          <input type="range" min="3" max="35" step="0.5" value="6" id="roadWidthSlider" class="tactile-range">
-          <div class="range-marks">
-            <span>&lt;6 ม.</span>
-            <span>6 ม.</span>
-            <span>10 ม.</span>
-            <span>16 ม.</span>
-            <span>&ge;30 ม.</span>
+          <!-- Live Conversion Chips -->
+          <div class="field-meta-chips">
+            <span class="meta-chip" id="chipSqm">200.00 ตร.ม.</span>
+            <span class="meta-chip" id="chipWah">50.0 ตร.ว.</span>
+            <span class="meta-chip" id="chipDeed">0 ไร่ 0 งาน 50 ตร.ว.</span>
           </div>
-        </div>
 
-        <!-- Road Quick Segmented Pills -->
-        <div class="segmented-pill-row" id="roadPillRow">
-          <button class="tactile-pill" data-road="5">&lt; 6 ม.</button>
-          <button class="tactile-pill active" data-road="6">6 - 8 ม.</button>
-          <button class="tactile-pill" data-road="10">10 ม.</button>
-          <button class="tactile-pill" data-road="12">12 ม.</button>
-          <button class="tactile-pill" data-road="16">16 ม.</button>
-          <button class="tactile-pill" data-road="30">&ge; 30 ม.</button>
-        </div>
-        <p class="field-help-text" id="roadLegalHelpText">
-          ถนนกว้าง 6.00 ม. — ระยะร่นด้านหน้าอย่างน้อย 2.00 ม. จากแนวเขตที่ดิน และสร้างอาคารสูงได้ตามอัตราส่วนเขตทาง
-        </p>
-      </section>
+          <!-- Parcel Geometry: Width x Depth -->
+          <div class="geometry-dimensions-box">
+            <div class="dimension-col">
+              <div class="dim-label-row">
+                <label for="inputPlotWidth" id="labelPlotWidth">หน้ากว้างที่ดิน (W)</label>
+                <span class="dim-tag" id="tagPlotWidth">10.0 ม.</span>
+              </div>
+              <div class="input-with-suffix compact">
+                <input type="number" step="0.5" min="2" id="inputPlotWidth" value="10" class="sub-input">
+                <span class="input-suffix" id="suffixWidthM">ม.</span>
+              </div>
+            </div>
 
-      <!-- Card 3: ผังสี กทม. & ประเภทอาคาร (BMA Zoning & Typology) -->
-      <section class="inspector-card">
-        <div class="card-bar">
-          <div class="card-caption">
-            <span class="caption-index">03</span>
-            <span class="caption-title">ผังเมือง กทม. (Zoning) & ประเภทอาคาร</span>
+            <div class="dimension-col">
+              <div class="dim-label-row">
+                <label for="inputPlotDepth" id="labelPlotDepth">ความลึกที่ดิน (D)</label>
+                <span class="dim-tag" id="tagPlotDepth">20.0 ม.</span>
+              </div>
+              <div class="input-with-suffix compact">
+                <input type="number" step="0.5" min="2" id="inputPlotDepth" value="20" class="sub-input">
+                <span class="input-suffix" id="suffixDepthM">ม.</span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Zone Selector -->
-        <div class="form-group">
-          <label for="zoneSelect" class="form-label">บริเวณผังสี (Bangkok Comprehensive Zoning)</label>
-          <div class="custom-select-shell">
-            <select id="zoneSelect" class="tactile-select" onchange="window.handleZoneChange && window.handleZoneChange(this.value)">
-              <optgroup label="ที่อยู่อาศัยหนาแน่นน้อย (สีเหลือง)">
-                <option value="Y1" selected>ย.1 (FAR 1.0 : OSR 40%) — ชานเมือง/บ้านเดี่ยว</option>
-                <option value="Y2">ย.2 (FAR 1.5 : OSR 25%) — ที่อยู่อาศัยชานเมือง</option>
-                <option value="Y3">ย.3 (FAR 2.5 : OSR 12.5%) — บ้านแถว/ทาวน์เฮาส์</option>
-                <option value="Y4">ย.4 (FAR 3.0 : OSR 10%) — ที่อยู่อาศัยรอบใน</option>
-              </optgroup>
-              <optgroup label="ที่อยู่อาศัยหนาแน่นปานกลาง (สีส้ม)">
-                <option value="Y5">ย.5 (FAR 4.0 : OSR 7.5%) — คอนโด/อาคารรวม</option>
-                <option value="Y6">ย.6 (FAR 4.5 : OSR 6.5%) — ชุมชนเมืองชั้นกลาง</option>
-                <option value="Y7">ย.7 (FAR 5.0 : OSR 6.0%) — ใกล้รถไฟฟ้า</option>
-              </optgroup>
-              <optgroup label="ที่อยู่อาศัยหนาแน่นมาก (สีน้ำตาล)">
-                <option value="Y8">ย.8 (FAR 6.0 : OSR 5.0%) — ย่านใจกลางเมือง</option>
-                <option value="Y9">ย.9 (FAR 7.0 : OSR 4.5%) — ศูนย์กลางคมนาคม</option>
-                <option value="Y10">ย.10 (FAR 8.0 : OSR 4.0%) — ย่าน CBD สูงพิเศษ</option>
-              </optgroup>
-              <optgroup label="พาณิชยกรรม (สีแดง)">
-                <option value="C1">พ.1 (FAR 5.0 : OSR 6.0%) — พาณิชยกรรมชุมชน</option>
-                <option value="C3">พ.3 (FAR 7.0 : OSR 4.5%) — ย่านการค้าสำคัญ</option>
-                <option value="C5">พ.5 (FAR 10.0 : OSR 3.0%) — ศูนย์กลางพาณิชย์หลัก CBD</option>
-              </optgroup>
-            </select>
-          </div>
-        </div>
-
-        <!-- Zoning Specs Bar -->
-        <div class="zoning-specs-strip">
-          <div class="spec-cell">
-            <span class="spec-key">FAR RATIO</span>
-            <span class="spec-val" id="dispFar">1.0 : 1</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-cell">
-            <span class="spec-key">MIN OSR</span>
-            <span class="spec-val" id="dispOsr">40%</span>
-          </div>
-          <div class="spec-divider"></div>
-          <div class="spec-cell">
-            <span class="spec-key">MAX BCR</span>
-            <span class="spec-val" id="dispBcr">60%</span>
-          </div>
-        </div>
-
-        <!-- Typology Selector -->
-        <div class="form-group" style="margin-top: 14px;">
-          <label class="form-label">ประเภทอาคาร (Building Typology)</label>
-          <div class="typology-grid" id="typologyGrid">
-            <button class="typo-pill active" data-typo="residential">
-              <span class="typo-icon">🏡</span>
-              <span class="typo-name">บ้านเดี่ยว / พักอาศัย</span>
-            </button>
-            <button class="typo-pill" data-typo="shophouse">
-              <span class="typo-icon">🏬</span>
-              <span class="typo-name">อาคารพาณิชย์ / ตึกแถว</span>
-            </button>
-            <button class="typo-pill" data-typo="highrise">
-              <span class="typo-icon">🏢</span>
-              <span class="typo-name">อาคารขนาดใหญ่ / คอนโด</span>
+          <div class="aspect-link-bar">
+            <button type="button" class="aspect-sync-btn" id="syncAspectBtn" title="ปรับสัดส่วน กว้าง:ลึก อัตโนมัติตามพื้นที่รวม">
+              <span id="syncAspectBtnText">🔗 อัตราส่วน W:D = 1:<strong id="aspectRatioLabel">2.0</strong> (คลิกเพื่อปรับสมดุล)</span>
             </button>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- Card 4: ประมาณการมูลค่าที่ดิน (Land Price Estimator) -->
-      <section class="inspector-card">
-        <div class="card-bar">
-          <div class="card-caption">
-            <span class="caption-index">04</span>
-            <span class="caption-title">ประเมินมูลค่าที่ดิน (Land Valuation)</span>
-          </div>
-          <button class="fold-toggle-btn" id="togglePriceFoldBtn" title="ย่อ/ขยาย">
-            <svg id="foldIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-          </button>
-        </div>
-
-        <div id="priceFoldContent">
-          <div class="price-input-split">
-            <div class="input-with-suffix compact">
-              <input type="number" step="1000" min="0" id="inputPriceRate" value="65000" class="sub-input">
-              <span class="input-suffix">บาท</span>
+        <!-- Card 2: เขตทางถนนสาธารณะ (Public Road ROW) -->
+        <section class="inspector-card">
+          <div class="card-bar">
+            <div class="card-caption">
+              <span class="caption-index">02</span>
+              <span class="caption-title" id="titleCard02">ความกว้างเขตทาง / ถนนสาธารณะ</span>
             </div>
-            <select id="selectPriceMode" class="tactile-select compact">
-              <option value="perWah" selected>บาท / ตารางวา</option>
-              <option value="perRai">บาท / ไร่</option>
-              <option value="total">ราคารวมทั้งแปลง</option>
-            </select>
-          </div>
-          <div class="price-summary-badge">
-            <span class="ps-label">มูลค่าประเมินรวมทั้งแปลง</span>
-            <span class="ps-value" id="dispTotalPrice">3,250,000 บาท</span>
-          </div>
-        </div>
-      </section>
-    </aside>
-
-    <!-- RIGHT COLUMN: Visualizer & Feasibility Board (~62%) -->
-    <section class="visualizer-column">
-      <div class="panel-section-header">
-        <span class="panel-badge">FEASIBILITY BOARD</span>
-        <h2>ผังวิเคราะห์และขอบเขตพื้นที่ก่อสร้าง (Schematic & Metrics)</h2>
-      </div>
-
-      <!-- Road Gatekeeper Alert Banner (3 Status: Pass, Warning, Violation) -->
-      <div class="road-gatekeeper-banner pass" id="roadGatekeeperBanner">
-        <div class="gatekeeper-icon-box" id="gatekeeperIconBox">
-          <svg class="gk-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-        </div>
-        <div class="gatekeeper-text-group">
-          <div class="gatekeeper-title-row">
-            <span class="gatekeeper-pill" id="gatekeeperPill">✓ ถูกต้องตามกฎหมาย</span>
-            <span class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางสำหรับประเภทอาคารที่เลือก</span>
-          </div>
-          <p class="gatekeeper-desc" id="gatekeeperDesc">ถนนสาธารณะกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคาร สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น</p>
-        </div>
-      </div>
-
-      <!-- Hero Metric Tiles (4 ค่าหลัก) -->
-      <div class="hero-metric-grid">
-        <!-- Tile 1: Max GFA -->
-        <div class="metric-tile" id="tileGfa">
-          <div class="tile-header">
-            <span class="tile-code">GFA // FAR</span>
-            <span class="tile-tag" id="tagGfa">MAX ALLOWED</span>
-          </div>
-          <div class="tile-metric-value" id="valMaxGfa">200.0</div>
-          <div class="tile-metric-unit">ตารางเมตร (SQ.M.)</div>
-          <div class="tile-footer-note" id="noteGfa">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
-        </div>
-
-        <!-- Tile 2: Max Footprint -->
-        <div class="metric-tile">
-          <div class="tile-header">
-            <span class="tile-code">BCR // FOOTPRINT</span>
-            <span class="tile-tag">GROUND COVER</span>
-          </div>
-          <div class="tile-metric-value" id="valMaxFootprint">120.0</div>
-          <div class="tile-metric-unit">ตารางเมตร (SQ.M.)</div>
-          <div class="tile-footer-note">พื้นที่ปกคลุมดินชั้นล่างสุดตามผังสี</div>
-        </div>
-
-        <!-- Tile 3: Min Open Space -->
-        <div class="metric-tile">
-          <div class="tile-header">
-            <span class="tile-code">OSR // OPEN SPACE</span>
-            <span class="tile-tag">MIN REQUIRED</span>
-          </div>
-          <div class="tile-metric-value" id="valMinOpenSpace">80.0</div>
-          <div class="tile-metric-unit">ตารางเมตร (SQ.M.)</div>
-          <div class="tile-footer-note">ที่ว่างขั้นต่ำปราศจากสิ่งปกคลุมดิน</div>
-        </div>
-
-        <!-- Tile 4: Height Limit -->
-        <div class="metric-tile">
-          <div class="tile-header">
-            <span class="tile-code">HT // LIMIT</span>
-            <span class="tile-tag">ROAD ANGLE</span>
-          </div>
-          <div class="tile-metric-value" id="valHeightLimit">12.0 - 15.0</div>
-          <div class="tile-metric-unit">เมตร (~3 - 4 ชั้น)</div>
-          <div class="tile-footer-note" id="noteHeightRule">อิงกฎหมายระยะร่นและเขตทาง 6.00 ม.</div>
-        </div>
-      </div>
-
-      <!-- 2D Schematic & 3D Isometric Board (Architectural Dot Grid + Setback Visualizer) -->
-      <div class="schematic-board-shell">
-        <div class="board-toolbar">
-          <div class="board-title-group">
-            <span class="board-dot"></span>
-            <span class="board-heading" id="boardHeadingText">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
-            <span class="board-scale-tag" id="canvasScaleTag">SCALE 1:200</span>
+            <span class="road-current-badge" id="roadCurrentBadge">6.00 เมตร</span>
           </div>
 
-          <div class="board-actions">
-            <!-- View Switcher: [ 2D Plan | 3D Isometric ] -->
-            <div class="view-mode-switcher" id="viewModeSwitcher" role="tablist" aria-label="สลับมุมมอง 2D / 3D">
-              <button class="view-switch-btn active" data-view-mode="2d" id="btnView2D" type="button">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-                <span>2D Plan</span>
+          <!-- Road Slider with Floating Value Pill -->
+          <div class="road-control-wrap" id="roadSliderWrap">
+            <div class="road-floating-pill" id="roadFloatingPill" aria-hidden="true">6.0 ม.</div>
+            <input type="range" min="3" max="35" step="0.5" value="6" id="roadWidthSlider" class="tactile-range">
+            <div class="range-marks" id="roadRangeMarks">
+              <span>&lt;6 ม.</span>
+              <span>6 ม.</span>
+              <span>10 ม.</span>
+              <span>16 ม.</span>
+              <span>&ge;30 ม.</span>
+            </div>
+          </div>
+
+          <!-- Road Quick Segmented Pills -->
+          <div class="segmented-pill-row" id="roadPillRow">
+            <button class="tactile-pill" data-road="5">&lt; 6 ม.</button>
+            <button class="tactile-pill active" data-road="6">6 - 8 ม.</button>
+            <button class="tactile-pill" data-road="10">10 ม.</button>
+            <button class="tactile-pill" data-road="12">12 ม.</button>
+            <button class="tactile-pill" data-road="16">16 ม.</button>
+            <button class="tactile-pill" data-road="30">&ge; 30 ม.</button>
+          </div>
+          <p class="field-help-text" id="roadLegalHelpText">
+            ถนนกว้าง 6.00 ม. — ระยะร่นด้านหน้าอย่างน้อย 2.00 ม. จากแนวเขตที่ดิน และสร้างอาคารสูงได้ตามอัตราส่วนเขตทาง
+          </p>
+        </section>
+
+        <!-- Card 3: ผังสี กทม. & ประเภทอาคาร (BMA Zoning & Typology) -->
+        <section class="inspector-card">
+          <div class="card-bar">
+            <div class="card-caption">
+              <span class="caption-index">03</span>
+              <span class="caption-title" id="titleCard03">ผังเมือง กทม. (Zoning) &amp; ประเภทอาคาร</span>
+            </div>
+          </div>
+
+          <!-- Zone Selector -->
+          <div class="form-group">
+            <label for="zoneSelect" class="form-label" id="labelZoneSelect">บริเวณผังสี (Bangkok Comprehensive Zoning)</label>
+            <div class="custom-select-shell">
+              <select id="zoneSelect" class="tactile-select" onchange="window.handleZoneChange && window.handleZoneChange(this.value)">
+                <optgroup label="ที่อยู่อาศัยหนาแน่นน้อย (สีเหลือง)" id="optGroupLowRes">
+                  <option value="Y1" selected>ย.1 (FAR 1.0 : OSR 40%) — ชานเมือง/บ้านเดี่ยว</option>
+                  <option value="Y2">ย.2 (FAR 1.5 : OSR 25%) — ที่อยู่อาศัยชานเมือง</option>
+                  <option value="Y3">ย.3 (FAR 2.5 : OSR 12.5%) — บ้านแถว/ทาวน์เฮาส์</option>
+                  <option value="Y4">ย.4 (FAR 3.0 : OSR 10%) — ที่อยู่อาศัยรอบใน</option>
+                </optgroup>
+                <optgroup label="ที่อยู่อาศัยหนาแน่นปานกลาง (สีส้ม)" id="optGroupMedRes">
+                  <option value="Y5">ย.5 (FAR 4.0 : OSR 7.5%) — คอนโด/อาคารรวม</option>
+                  <option value="Y6">ย.6 (FAR 4.5 : OSR 6.5%) — ชุมชนเมืองชั้นกลาง</option>
+                  <option value="Y7">ย.7 (FAR 5.0 : OSR 6.0%) — ใกล้รถไฟฟ้า</option>
+                </optgroup>
+                <optgroup label="ที่อยู่อาศัยหนาแน่นมาก (สีน้ำตาล)" id="optGroupHighRes">
+                  <option value="Y8">ย.8 (FAR 6.0 : OSR 5.0%) — ย่านใจกลางเมือง</option>
+                  <option value="Y9">ย.9 (FAR 7.0 : OSR 4.5%) — ศูนย์กลางคมนาคม</option>
+                  <option value="Y10">ย.10 (FAR 8.0 : OSR 4.0%) — ย่าน CBD สูงพิเศษ</option>
+                </optgroup>
+                <optgroup label="พาณิชยกรรม (สีแดง)" id="optGroupComm">
+                  <option value="C1">พ.1 (FAR 5.0 : OSR 6.0%) — พาณิชยกรรมชุมชน</option>
+                  <option value="C3">พ.3 (FAR 7.0 : OSR 4.5%) — ย่านการค้าสำคัญ</option>
+                  <option value="C5">พ.5 (FAR 10.0 : OSR 3.0%) — ศูนย์กลางพาณิชย์หลัก CBD</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+
+          <!-- Zoning Specs Bar -->
+          <div class="zoning-specs-strip">
+            <div class="spec-cell">
+              <span class="spec-key">FAR RATIO</span>
+              <span class="spec-val" id="dispFar">1.0 : 1</span>
+            </div>
+            <div class="spec-divider"></div>
+            <div class="spec-cell">
+              <span class="spec-key">MIN OSR</span>
+              <span class="spec-val" id="dispOsr">40%</span>
+            </div>
+            <div class="spec-divider"></div>
+            <div class="spec-cell">
+              <span class="spec-key">MAX BCR</span>
+              <span class="spec-val" id="dispBcr">60%</span>
+            </div>
+          </div>
+
+          <!-- Typology Selector -->
+          <div class="form-group" style="margin-top: 14px;">
+            <label class="form-label" id="labelTypology">ประเภทอาคาร (Building Typology)</label>
+            <div class="typology-grid" id="typologyGrid">
+              <button class="typo-pill active" data-typo="residential" id="btnTypoResidential">
+                <span class="typo-icon">🏡</span>
+                <span class="typo-name" id="typoNameResidential">บ้านเดี่ยว / พักอาศัย</span>
               </button>
-              <button class="view-switch-btn" data-view-mode="3d" id="btnView3D" type="button">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                <span>3D Isometric</span>
+              <button class="typo-pill" data-typo="shophouse" id="btnTypoShophouse">
+                <span class="typo-icon">🏬</span>
+                <span class="typo-name" id="typoNameShophouse">อาคารพาณิชย์ / ตึกแถว</span>
+              </button>
+              <button class="typo-pill" data-typo="highrise" id="btnTypoHighrise">
+                <span class="typo-icon">🏢</span>
+                <span class="typo-name" id="typoNameHighrise">อาคารขนาดใหญ่ / คอนโด</span>
               </button>
             </div>
+          </div>
+        </section>
 
-            <span class="toolbar-v-divider"></span>
+        <!-- Card 4: ประมาณการมูลค่าที่ดิน (Land Price Estimator) -->
+        <section class="inspector-card">
+          <div class="card-bar">
+            <div class="card-caption">
+              <span class="caption-index">04</span>
+              <span class="caption-title" id="titleCard04">ประเมินมูลค่าที่ดิน (Land Valuation)</span>
+            </div>
+            <button type="button" class="fold-toggle-btn" id="togglePriceFoldBtn" aria-expanded="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+          </div>
 
-            <button class="board-tool-btn active" id="btnToggleSetbackHatch" title="เปิด/ปิดเส้นแรเงาระยะร่น">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-              <span>ระยะร่น (Setbacks)</span>
-            </button>
-            <button class="board-tool-btn active" id="btnToggleDims" title="เปิด/ปิดเส้นบอกขนาด Dimension">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 6H3"/><path d="M21 18H3"/><path d="M6 3v6"/><path d="M18 3v6"/><path d="M6 15v6"/><path d="M18 15v6"/></svg>
-              <span>ระยะมิติ (Dims)</span>
-            </button>
-            <button class="board-tool-btn" id="btnCenterPlan" title="จัดกึ่งกลางผัง">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="m16 12-4 4-4-4"/></svg>
-              <span>Fit</span>
-            </button>
+          <div class="foldable-content" id="priceFoldContent">
+            <div class="price-input-grid">
+              <div class="input-with-suffix compact">
+                <input type="number" step="1000" min="0" id="inputPriceRate" value="65000" class="sub-input">
+                <span class="input-suffix" id="suffixBaht">บาท</span>
+              </div>
+              <select id="selectPriceMode" class="tactile-select compact">
+                <option value="perWah" id="optPricePerWah">บาท / ตารางวา</option>
+                <option value="perSqm" id="optPricePerSqm">บาท / ตารางเมตร</option>
+                <option value="perRai" id="optPricePerRai">บาท / ไร่</option>
+              </select>
+            </div>
+            <div class="price-summary-badge">
+              <span class="ps-label" id="labelTotalLandValue">มูลค่าประเมินรวมทั้งแปลง</span>
+              <strong class="ps-value" id="valTotalLandPrice">3,250,000 บาท</strong>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- CENTER / RIGHT HERO STAGE: Runway Studio Viewport + Apple Bento HUD (~70%+) -->
+      <section class="visualizer-column">
+        <div class="panel-section-header">
+          <span class="panel-badge" id="badgeBoard">STUDIO VIEWPORT</span>
+          <h2 id="headingBoard">ผังวิเคราะห์ศักยภาพและมวลปริมาตรอาคาร 3 มิติ (Real-Time Envelope &amp; Massing)</h2>
+        </div>
+
+        <!-- Road Gatekeeper Alert Banner (Pass / Warning / Violation) -->
+        <div class="road-gatekeeper-banner pass" id="roadGatekeeperBanner" role="status" aria-live="polite">
+          <div class="gatekeeper-icon-box" id="gatekeeperIconBox">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <div class="gatekeeper-body">
+            <div class="gatekeeper-header-row">
+              <span class="gatekeeper-pill" id="gatekeeperPill">✓ ถูกต้องตามกฎหมาย</span>
+              <strong class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางสำหรับประเภทอาคารที่เลือก</strong>
+            </div>
+            <p class="gatekeeper-desc" id="gatekeeperDesc">
+              ถนนสาธารณะกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคารสำหรับบ้านเดี่ยว / พักอาศัย สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น
+            </p>
           </div>
         </div>
 
-        <!-- Blueprint / Dot Grid Interactive Canvas -->
-        <div class="schematic-viewport" id="schematicViewport">
-          <svg id="schematicSvg" class="schematic-svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 800 560">
-            <!-- Dynamic architectural drawing injected by script.js -->
-          </svg>
-
-          <!-- Floating Legend inside Viewport -->
-          <div class="viewport-legend">
-            <div class="legend-item">
-              <span class="legend-swatch road"></span>
-              <span>เขตทาง/ถนนสาธารณะ</span>
+        <!-- Apple Bento Metric Cards (4 Hero Feasibility HUD Cards) -->
+        <div class="hero-metrics-grid">
+          <!-- Tile 1: Max GFA -->
+          <div class="metric-tile primary-tile" id="tileGfa">
+            <div class="tile-header">
+              <span class="tile-code" id="codeGfa">MAX GFA // FAR</span>
+              <span class="tile-tag" id="tagGfa">MAX ALLOWED</span>
             </div>
-            <div class="legend-item">
-              <span class="legend-swatch boundary"></span>
-              <span>แนวเขตที่ดิน (Plot Boundary)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-swatch setback"></span>
-              <span>ระยะร่นตามกฎหมาย (Setback Zone)</span>
-            </div>
-            <div class="legend-item">
-              <span class="legend-swatch buildable"></span>
-              <span>ขอบเขตก่อสร้างได้ (Buildable Envelope)</span>
-            </div>
-            <div class="legend-item hidden" id="legendMassingItem">
-              <span class="legend-swatch massing"></span>
-              <span>ก้อนอาคาร 3D Massing (ตามความสูง H)</span>
-            </div>
+            <div class="tile-metric-value" id="valMaxGfa">200</div>
+            <div class="tile-metric-unit" id="unitGfa">ตารางเมตร (SQ.M.)</div>
+            <div class="tile-footer-note" id="noteGfa">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
           </div>
 
-          <!-- Live Dimensional Status Ribbon -->
-          <div class="viewport-status-ribbon">
-            <span class="ribbon-item">หน้ากว้างที่ดิน: <strong id="ribbonWidth">10.00 ม.</strong></span>
-            <span class="ribbon-item">ความลึกที่ดิน: <strong id="ribbonDepth">20.00 ม.</strong></span>
-            <span class="ribbon-item">หน้ากว้างอาคารสูงสุด: <strong id="ribbonBuildWidth">6.00 ม.</strong></span>
-            <span class="ribbon-item">ความลึกอาคารสูงสุด: <strong id="ribbonBuildDepth">15.00 ม.</strong></span>
+          <!-- Tile 2: Max Footprint -->
+          <div class="metric-tile">
+            <div class="tile-header">
+              <span class="tile-code" id="codeBcr">BCR // FOOTPRINT</span>
+              <span class="tile-tag" id="tagBcr">GROUND COVER</span>
+            </div>
+            <div class="tile-metric-value" id="valMaxFootprint">96</div>
+            <div class="tile-metric-unit" id="unitBcr">ตารางเมตร (SQ.M.)</div>
+            <div class="tile-footer-note" id="noteBcr">พื้นที่ปกคลุมดินชั้นล่างสุดตามผังสี</div>
           </div>
-        </div>
-      </div>
 
-      <!-- Legal & Tier Feasibility Breakdown (Expandable Drawer / Tabs) -->
-      <div class="legal-drawer-card">
-        <div class="drawer-header collapsed" id="drawerHeaderToggle">
-          <div class="drawer-header-left">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-            <span class="drawer-title">ข้อกำหนดกฎหมาย &amp; รายละเอียดการวิเคราะห์ Tier 1 / Tier 2</span>
+          <!-- Tile 3: Min Open Space -->
+          <div class="metric-tile">
+            <div class="tile-header">
+              <span class="tile-code" id="codeOsr">OSR // OPEN SPACE</span>
+              <span class="tile-tag" id="tagOsr">MIN REQUIRED</span>
+            </div>
+            <div class="tile-metric-value" id="valMinOpenSpace">80</div>
+            <div class="tile-metric-unit" id="unitOsr">ตารางเมตร (SQ.M.)</div>
+            <div class="tile-footer-note" id="noteOsr">ที่ว่างขั้นต่ำปราศจากสิ่งปกคลุมดิน</div>
           </div>
-          <div class="drawer-header-right">
-            <span class="drawer-state-tag" id="drawerStateTag">คลิกเพื่อดูรายละเอียด</span>
-            <button class="drawer-arrow-btn" aria-label="Toggle Drawer">
-              <svg id="drawerChevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
+
+          <!-- Tile 4: Height Limit -->
+          <div class="metric-tile">
+            <div class="tile-header">
+              <span class="tile-code" id="codeHeight">MAX HEIGHT // H</span>
+              <span class="tile-tag" id="tagHeight">ROAD ANGLE</span>
+            </div>
+            <div class="tile-metric-value" id="valHeightLimit">12 ม. (~3 ชั้น)</div>
+            <div class="tile-metric-unit" id="unitHeight">เมตร (~3 - 4 ชั้น)</div>
+            <div class="tile-footer-note" id="noteHeightRule">อิงกฎหมายระยะร่นและเขตทาง 6.00 ม.</div>
           </div>
         </div>
 
-        <div class="drawer-body hidden" id="drawerBody">
-          <!-- Tier Tabs inside Drawer -->
-          <div class="drawer-tabs">
-            <button class="drawer-tab active" data-dtab="tier1">Tier 1: กฎกระทรวง ฉบับที่ 55 (พ.ร.บ. ควบคุมอาคาร)</button>
-            <button class="drawer-tab" data-dtab="tier2">Tier 2: ผังเมืองรวม กทม. (FAR / OSR / โบนัส)</button>
-            <button class="drawer-tab" data-dtab="matrix">ตารางสรุป Feasibility Matrix</button>
-          </div>
-
-          <!-- Tier 1 Content -->
-          <div class="dtab-pane active" id="paneTier1">
-            <div class="legal-rules-grid">
-              <div class="rule-box">
-                <div class="rule-header">
-                  <span class="rule-badge">ข้อ 34</span>
-                  <h4>ระยะร่นจากถนนสาธารณะ</h4>
-                </div>
-                <p id="ruleRoadText">
-                  สำหรับถนนสาธารณะกว้าง 6.00 เมตร อาคารต้องร่นแนวอาคารห่างจากเขตทางอย่างน้อย 2.00 เมตร
-                </p>
-                <div class="rule-spec-tag">บังคับร่นด้านหน้า: <strong id="specFrontSetback">2.00 ม.</strong></div>
-              </div>
-
-              <div class="rule-box">
-                <div class="rule-header">
-                  <span class="rule-badge">ข้อ 50</span>
-                  <h4>ระยะร่นด้านข้างและด้านหลัง</h4>
-                </div>
-                <p id="ruleSideText">
-                  อาคารพักอาศัย: ผนังที่มีหน้าต่างหรือช่องเปิดต้องร่นจากแนวเขตที่ดินอย่างน้อย 2.00 เมตร (หากผนังทึบร่น 0.50 ม. หรือชิดเขตโดยได้รับความยินยอม)
-                </p>
-                <div class="rule-spec-tag">ร่นข้าง: <strong id="specSideSetback">2.00 ม.</strong> / ร่นหลัง: <strong id="specRearSetback">2.00 ม.</strong></div>
-              </div>
-
-              <div class="rule-box">
-                <div class="rule-header">
-                  <span class="rule-badge">ข้อ 44</span>
-                  <h4>ความสูงอาคารเทียบเขตทาง</h4>
-                </div>
-                <p id="ruleHeightText">
-                  ความสูงของอาคารต้องไม่เกิน 2 เท่าของระยะห่างในแนวดิ่งวัดจากกึ่งกลางถนนถึงอาคารฝั่งตรงข้าม
-                </p>
-                <div class="rule-spec-tag">เพดานความสูงสัมพันธ์: <strong id="specRoadHeightLimit">12 - 15 ม.</strong></div>
-              </div>
-
-              <div class="rule-box">
-                <div class="rule-header">
-                  <span class="rule-badge">ข้อ 33</span>
-                  <h4>ที่ว่างขั้นต่ำปราศจากสิ่งปกคลุม</h4>
-                </div>
-                <p>
-                  อาคารพักอาศัยต้องมีที่ว่างไม่น้อยกว่าร้อยละ 30 ของพื้นที่ดิน (หรือตาม OSR ผังเมืองที่เข้มงวดกว่า)
-                </p>
-                <div class="rule-spec-tag">ที่ว่างขั้นต่ำ: <strong id="specOpenSpaceText">40% ตามผังเมือง</strong></div>
-              </div>
+        <!-- CENTER HERO 3D / 2D VIEWPORT (Runway Studio Stage + Floating Glassmorphism Dock) -->
+        <div class="schematic-board-shell">
+          <div class="board-toolbar">
+            <div class="board-title-group">
+              <span class="board-dot"></span>
+              <span class="board-heading" id="boardHeadingText">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
+              <span class="board-scale-tag" id="canvasScaleTag">SCALE 1:200</span>
+            </div>
+            <div class="board-live-pill">
+              <span class="live-pulse"></span>
+              <span id="liveEngineBadge">REAL-TIME PARAMETRIC ENGINE</span>
             </div>
           </div>
 
-          <!-- Tier 2 Content -->
-          <div class="dtab-pane" id="paneTier2">
-            <div class="tier2-layout">
-              <div class="tier2-card">
-                <h4>สิทธิประโยชน์และเงื่อนไข FAR Bonus</h4>
-                <p>ผังเมืองรวมกรุงเทพมหานครเปิดให้ขอเพิ่มอัตราส่วนพื้นที่อาคารรวม (FAR Bonus) ได้สูงสุดไม่เกิน 20% จากเงื่อนไขดังนี้:</p>
-                <ul class="studio-check-list">
-                  <li><strong>ที่ดินใกล้สถานีรถไฟฟ้าขนส่งมวลชน (&le; 500 ม.):</strong> โบนัส FAR สูงสุด +20%</li>
-                  <li><strong>อาคารประหยัดพลังงาน (Green Building - TREES/LEED):</strong> โบนัส FAR +5% ถึง +20%</li>
-                  <li><strong>การจัดให้มีพื้นที่กักเก็บน้ำฝน (Retention Basin):</strong> โบนัส FAR ตามปริมาตรที่กักเก็บ</li>
-                  <li><strong>การจัดให้มีพื้นที่สาธารณะเพื่อประโยชน์ชุมชน:</strong> เพิ่มพื้นที่อาคารตามขนาดลานเปิดโล่ง</li>
-                </ul>
+          <!-- Center Hero Interactive Canvas -->
+          <div class="schematic-viewport" id="schematicViewport">
+
+            <!-- Floating Glassmorphism Controls Dock (Runway + Apple VisionOS Style) -->
+            <div class="floating-controls-dock" id="floatingControlsDock" role="toolbar" aria-label="Viewport Controls">
+              <div class="view-mode-switcher" id="viewModeSwitcher" role="tablist" aria-label="สลับมุมมอง 2D / 3D">
+                <button class="view-switch-btn active" data-view-mode="2d" id="btnView2D" type="button">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                  <span id="labelView2D">2D Plan</span>
+                </button>
+                <button class="view-switch-btn" data-view-mode="3d" id="btnView3D" type="button">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                  <span id="labelView3D">3D Isometric</span>
+                </button>
               </div>
-              <div class="tier2-card">
-                <h4>การคำนวณ FAR Potential พร้อม Bonus (+20%)</h4>
-                <div class="bonus-calc-strip">
-                  <div class="bc-item">
-                    <span>FAR พื้นฐาน</span>
-                    <strong id="bonusBaseFar">1.0 : 1</strong>
+
+              <span class="toolbar-v-divider"></span>
+
+              <button class="board-tool-btn active" id="btnToggleSetbackHatch" type="button" title="เปิด/ปิดเส้นแรเงาระยะร่น">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                <span id="labelToggleSetbacks">ระยะร่น (Setbacks)</span>
+              </button>
+              <button class="board-tool-btn active" id="btnToggleDims" type="button" title="เปิด/ปิดเส้นบอกขนาด Dimension">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 6H3"/><path d="M21 18H3"/><path d="M6 3v6"/><path d="M18 3v6"/><path d="M6 15v6"/><path d="M18 15v6"/></svg>
+                <span id="labelToggleDims">ระยะมิติ (Dims)</span>
+              </button>
+              <button class="board-tool-btn" id="btnCenterPlan" type="button" title="จัดกึ่งกลางผัง">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4"/><path d="m16 12-4 4-4-4"/></svg>
+                <span id="labelFitBtn">Fit</span>
+              </button>
+            </div>
+
+            <svg id="schematicSvg" class="schematic-svg" preserveAspectRatio="xMidYMid meet" viewBox="0 0 800 560">
+              <!-- Dynamic architectural drawing injected by script.js -->
+            </svg>
+
+            <!-- Floating Legend inside Viewport -->
+            <div class="viewport-legend">
+              <div class="legend-item">
+                <span class="legend-swatch road"></span>
+                <span id="legendRoadText">เขตทาง/ถนนสาธารณะ</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch boundary"></span>
+                <span id="legendBoundaryText">แนวเขตที่ดิน (Plot Boundary)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch setback"></span>
+                <span id="legendSetbackText">ระยะร่นตามกฎหมาย (Setback Zone)</span>
+              </div>
+              <div class="legend-item">
+                <span class="legend-swatch buildable"></span>
+                <span id="legendBuildableText">ขอบเขตก่อสร้างได้ (Buildable Envelope)</span>
+              </div>
+              <div class="legend-item hidden" id="legendMassingItem">
+                <span class="legend-swatch massing"></span>
+                <span id="legendMassingText">ก้อนอาคาร 3D Massing (ตามความสูง H)</span>
+              </div>
+            </div>
+
+            <!-- Viewport Bottom Status Ribbon -->
+            <div class="viewport-status-ribbon">
+              <span class="ribbon-item"><span id="ribbonLabelW">หน้ากว้างที่ดิน:</span> <strong id="ribbonWidth">10.0 ม.</strong></span>
+              <span class="ribbon-item"><span id="ribbonLabelD">ความลึกที่ดิน:</span> <strong id="ribbonDepth">20.0 ม.</strong></span>
+              <span class="ribbon-item"><span id="ribbonLabelBW">หน้ากว้างอาคารสูงสุด:</span> <strong id="ribbonBuildWidth">6.0 ม.</strong></span>
+              <span class="ribbon-item"><span id="ribbonLabelBD">ความลึกอาคารสูงสุด:</span> <strong id="ribbonBuildDepth">16.0 ม.</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Collapsible Legal Drawer: Tier 1 & Tier 2 Architectural Regulations -->
+        <div class="legal-drawer-card" id="legalDrawerCard">
+          <div class="drawer-header" id="drawerHeaderToggle">
+            <div class="drawer-header-left">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+              <span class="drawer-title" id="drawerTitleText">ข้อกำหนดกฎหมาย &amp; รายละเอียดการวิเคราะห์ Tier 1 / Tier 2</span>
+            </div>
+            <div class="drawer-header-right">
+              <span class="drawer-state-tag" id="drawerStateTag">ซ่อนรายละเอียด</span>
+              <button class="drawer-arrow-btn" aria-label="Toggle Legal Details">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m18 15-6-6-6 6"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="drawer-body" id="drawerBody">
+            <!-- Tabs inside Drawer -->
+            <div class="drawer-tabs">
+              <button class="drawer-tab active" data-dtab="tier1" id="dtabTier1">Tier 1: กฎกระทรวง ฉบับที่ 55 (พ.ร.บ. ควบคุมอาคาร)</button>
+              <button class="drawer-tab" data-dtab="tier2" id="dtabTier2">Tier 2: ผังเมืองรวม กทม. (FAR / OSR / โบนัส)</button>
+              <button class="drawer-tab" data-dtab="matrix" id="dtabMatrix">ตารางสรุป Feasibility Matrix</button>
+            </div>
+
+            <!-- Tier 1 Content -->
+            <div class="dtab-pane active" id="paneTier1">
+              <div class="legal-rules-grid">
+                <div class="rule-box">
+                  <div class="rule-header">
+                    <span class="rule-badge">RULE 01</span>
+                    <h4 id="rule01Title">ระยะร่นด้านหน้า (แนวถนนสาธารณะ)</h4>
                   </div>
-                  <span class="bc-arrow">&rarr;</span>
-                  <div class="bc-item">
-                    <span>FAR รวมโบนัส (+20%)</span>
-                    <strong id="bonusMaxFar">1.2 : 1</strong>
+                  <p id="ruleFrontText">ถนนกว้างน้อยกว่า 6 ม. ต้องร่นจากกึ่งกลางถนนอย่างน้อย 3.00 ม. หากถนนกว้าง 6-10 ม. ร่นจากเขตที่ดิน 2.00 ม. และถนนกว้างเกิน 10 ม. ร่นอย่างน้อย 3.00-6.00 ม. ตามประเภทอาคาร</p>
+                  <div class="rule-spec-tag"><span id="rule01SpecLabel">ค่าที่ใช้คำนวณปัจจุบัน:</span> <strong id="specFrontSetback">2.00 ม.</strong></div>
+                </div>
+
+                <div class="rule-box">
+                  <div class="rule-header">
+                    <span class="rule-badge">RULE 02</span>
+                    <h4 id="rule02Title">ระยะร่นด้านข้างและด้านหลัง</h4>
                   </div>
-                  <span class="bc-arrow">&rarr;</span>
-                  <div class="bc-item highlight">
-                    <span>พื้นที่อาคารรวมศักยภาพสูงสุด</span>
-                    <strong id="bonusMaxGfa">240.0 ตร.ม.</strong>
+                  <p id="ruleSideText">อาคารพักอาศัยทั่วไปที่มีช่องเปิด (หน้าต่าง/ระเบียง) ต้องเว้นระยะร่นจากแนวเขตที่ดินด้านข้างอย่างน้อย 2.00 ม. (หากสูงเกิน 9 ม. แต่ไม่เกิน 23 ม. ต้องร่นอย่างน้อย 3.00 ม.)</p>
+                  <div class="rule-spec-tag"><span id="rule02SpecLabel">ร่นข้าง / ร่นหลัง:</span> <strong id="specSideSetback">2.00 ม.</strong> / <strong id="specRearSetback">2.00 ม.</strong></div>
+                </div>
+
+                <div class="rule-box">
+                  <div class="rule-header">
+                    <span class="rule-badge">RULE 03</span>
+                    <h4 id="rule03Title">ความสูงอาคารสัมพันธ์กับเขตทาง (H &le; 2W)</h4>
+                  </div>
+                  <p id="rule03Desc">ความสูงของอาคารไม่ว่าจากจุดใดจุดหนึ่ง ต้องไม่เกิน 2 เท่าของระยะราบจากจุดนั้นไปตั้งฉากกับแนวเขตด้านตรงข้ามของถนนสาธารณะที่อยู่ใกล้อาคารที่สุด (กฎกระทรวง ฉบับที่ 55 ข้อ 44)</p>
+                  <div class="rule-spec-tag"><span id="rule03SpecLabel">เพดานความสูงตามถนน:</span> <strong id="specRoadHeightLimit">12.0 ม. (3 ชั้น)</strong></div>
+                </div>
+
+                <div class="rule-box">
+                  <div class="rule-header">
+                    <span class="rule-badge">RULE 04</span>
+                    <h4 id="rule04Title">ที่ว่างปราศจากสิ่งปกคลุม (Open Space)</h4>
+                  </div>
+                  <p id="rule04Desc">อาคารอยู่อาศัยต้องมีที่ว่างอันปราศจากสิ่งปกคลุมไม่น้อยกว่า 30% ของพื้นที่ชั้นใดชั้นหนึ่งที่มากที่สุด (หรือสอดคล้องกับ OSR ของผังเมืองรวม กทม.)</p>
+                  <div class="rule-spec-tag"><span id="rule04SpecLabel">ที่ว่างขั้นต่ำตามเกณฑ์:</span> <strong id="specOpenSpaceText">40% (80.0 ตร.ม.)</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tier 2 Content -->
+            <div class="dtab-pane" id="paneTier2">
+              <div class="tier2-layout">
+                <div class="tier2-card">
+                  <h4 id="tier2Card1Title">เกณฑ์ผังเมืองรวมกรุงเทพมหานคร (FAR &amp; OSR)</h4>
+                  <p id="tier2Card1Desc">การคำนวณศักยภาพสูงสุดของที่ดินแปลงนี้ อ้างอิงข้อกำหนดผังสีของกรุงเทพมหานคร โดยควบคุมอัตราส่วนพื้นที่อาคารรวมต่อพื้นที่ดิน (FAR) และอัตราส่วนของที่ว่างต่อพื้นที่อาคารรวม (OSR)</p>
+                  <ul class="studio-check-list" id="tier2CheckList">
+                    <li><strong>FAR (Floor Area Ratio):</strong> กำหนดเพดานพื้นที่ก่อสร้างรวมทุกชั้นสูงสุด</li>
+                    <li><strong>OSR (Open Space Ratio):</strong> กำหนดสัดส่วนพื้นที่ว่างเปิดโล่งเพื่อคุณภาพสิ่งแวดล้อมเมือง</li>
+                    <li><strong>Road Width Gatekeeper:</strong> อาคารสูงหรืออาคารขนาดใหญ่พิเศษ (&gt;10,000 ตร.ม.) ต้องตั้งอยู่บนถนนที่มีเขตทางกว้างไม่น้อยกว่า 10.00 - 18.00 ม. (กฎกระทรวง ฉบับที่ 33)</li>
+                  </ul>
+                </div>
+
+                <div class="tier2-card">
+                  <h4 id="tier2Card2Title">มาตรการจูงใจ (FAR Bonus — เพิ่มพื้นที่สูงสุด +20%)</h4>
+                  <p id="tier2Card2Desc">หากโครงการจัดให้มีพื้นที่สาธารณประโยชน์ การกักเก็บน้ำฝน หรือผ่านเกณฑ์อาคารเขียว (TREES / LEED) สามารถขอรับโบนัสพื้นที่ก่อสร้างเพิ่มได้สูงสุดไม่เกิน 20%</p>
+                  <div class="bonus-calc-strip">
+                    <div class="bc-item">
+                      <span id="bonusLabelBase">FAR ปกติ</span>
+                      <strong id="bonusBaseFar">1.0 : 1</strong>
+                    </div>
+                    <span class="bc-arrow">&rarr;</span>
+                    <div class="bc-item">
+                      <span id="bonusLabelMaxFar">FAR รวมโบนัส (+20%)</span>
+                      <strong id="bonusMaxFar">1.20 : 1</strong>
+                    </div>
+                    <span class="bc-arrow">&rarr;</span>
+                    <div class="bc-item highlight">
+                      <span id="bonusLabelMaxGfa">พื้นที่อาคารรวมศักยภาพสูงสุด</span>
+                      <strong id="bonusMaxGfa">240.0 ตร.ม.</strong>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Feasibility Matrix Content -->
-          <div class="dtab-pane" id="paneMatrix">
-            <div class="matrix-table-wrap">
-              <table class="matrix-table">
-                <thead>
-                  <tr>
-                    <th>ดัชนีชี้วัด (Feasibility Metric)</th>
-                    <th>ค่าคำนวณทางสถาปัตยกรรม</th>
-                    <th>เกณฑ์มาตรฐานกฎหมาย</th>
-                    <th>สถานะการประเมิน</th>
-                  </tr>
-                </thead>
-                <tbody id="matrixTableBody">
-                  <!-- Injected via script.js -->
-                </tbody>
-              </table>
+            <!-- Feasibility Matrix Content -->
+            <div class="dtab-pane" id="paneMatrix">
+              <div class="matrix-table-wrap">
+                <table class="matrix-table">
+                  <thead>
+                    <tr>
+                      <th id="thMatrixMetric">ดัชนีชี้วัด (Feasibility Metric)</th>
+                      <th id="thMatrixCalc">ค่าคำนวณทางสถาปัตยกรรม</th>
+                      <th id="thMatrixStandard">เกณฑ์มาตรฐานกฎหมาย</th>
+                      <th id="thMatrixStatus">สถานะการประเมิน</th>
+                    </tr>
+                  </thead>
+                  <tbody id="matrixTableBody">
+                    <!-- Injected via script.js -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
+  </div>
 
   <!-- Studio Floating Toast -->
   <div class="studio-toast" id="studioToast">
@@ -577,6 +715,6 @@
     <span id="studioToastMsg">คัดลอกข้อมูลสำเร็จ</span>
   </div>
 
-  <script src="script.js?v=2.5"></script>
+  <script src="script.js?v=3.0"></script>
 </body>
 </html>
