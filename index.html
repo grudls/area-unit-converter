@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=2.5">
 </head>
 <body>
 
@@ -198,7 +198,7 @@
         <div class="form-group">
           <label for="zoneSelect" class="form-label">บริเวณผังสี (Bangkok Comprehensive Zoning)</label>
           <div class="custom-select-shell">
-            <select id="zoneSelect" class="tactile-select">
+            <select id="zoneSelect" class="tactile-select" onchange="window.handleZoneChange && window.handleZoneChange(this.value)">
               <optgroup label="ที่อยู่อาศัยหนาแน่นน้อย (สีเหลือง)">
                 <option value="Y1" selected>ย.1 (FAR 1.0 : OSR 40%) — ชานเมือง/บ้านเดี่ยว</option>
                 <option value="Y2">ย.2 (FAR 1.5 : OSR 25%) — ที่อยู่อาศัยชานเมือง</option>
@@ -577,6 +577,6 @@
     <span id="studioToastMsg">คัดลอกข้อมูลสำเร็จ</span>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=2.5"></script>
 </body>
 </html>

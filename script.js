@@ -20,6 +20,23 @@ const BMA_ZONING_DATA = {
   C5: { code: 'พ.5', far: 10.0, osr: 3.0, bcr: 80.0, name: 'พาณิชยกรรมศูนย์กลางหลัก CBD (พ.5)' },
 };
 
+function resolveZoneKey(rawVal) {
+  if (!rawVal) return 'Y1';
+  const str = String(rawVal).trim();
+  const upper = str.toUpperCase();
+  if (BMA_ZONING_DATA[upper]) return upper;
+  if (upper.startsWith('P')) {
+    const mapped = 'C' + upper.slice(1);
+    if (BMA_ZONING_DATA[mapped]) return mapped;
+  }
+  for (const [k, v] of Object.entries(BMA_ZONING_DATA)) {
+    if (str === v.code || str.startsWith(v.code + ' ') || str.includes(`(${v.code})`)) {
+      return k;
+    }
+  }
+  return 'Y1';
+}
+
 // --- 2. Workspace State ---
 const state = {
   totalSqm: 200.0,
@@ -27,6 +44,9 @@ const state = {
   depthMeters: 20.0,
   roadWidth: 6.0,
   zoneKey: 'Y1',
+  far: 1.0,
+  osr: 40.0,
+  bcr: 60.0,
   typology: 'residential', // 'residential', 'shophouse', 'highrise'
   priceRate: 65000,
   priceMode: 'perWah',
@@ -134,18 +154,29 @@ function calculateLegalSetbacks() {
 
 // --- 4. Hero Metric & Feasibility Calculation ---
 function recalculateFeasibility() {
+  const zoneSelectEl = document.getElementById('zoneSelect');
+  if (zoneSelectEl && zoneSelectEl.value) {
+    state.zoneKey = resolveZoneKey(zoneSelectEl.value);
+    if (zoneSelectEl.value !== state.zoneKey && BMA_ZONING_DATA[state.zoneKey]) {
+      zoneSelectEl.value = state.zoneKey;
+    }
+  }
   const zone = BMA_ZONING_DATA[state.zoneKey] || BMA_ZONING_DATA.Y1;
+  state.far = zone.far;
+  state.osr = zone.osr;
+  state.bcr = zone.bcr;
+
   const setbacks = calculateLegalSetbacks();
 
   // 4.1 Max GFA by FAR
-  const maxGfa = state.totalSqm * zone.far;
+  const maxGfa = state.totalSqm * state.far;
 
   // 4.2 Max Footprint by BCR and Setbacks
-  const bcrFootprint = state.totalSqm * (zone.bcr / 100.0);
+  const bcrFootprint = state.totalSqm * (state.bcr / 100.0);
   const legalFootprint = Math.min(bcrFootprint, setbacks.buildableFootprintGround);
 
   // 4.3 Min Open Space by OSR
-  const minOpenSpace = state.totalSqm * (zone.osr / 100.0);
+  const minOpenSpace = state.totalSqm * (state.osr / 100.0);
 
   // 4.4 Max Estimated Floors
   const estFloors = Math.max(1, Math.floor(setbacks.heightLimitMeters / 3.2));
@@ -191,8 +222,8 @@ function recalculateFeasibility() {
 
   // --- Update Zoning Specs Bar ---
   document.getElementById('dispFar').textContent = `${zone.far.toFixed(1)} : 1`;
-  document.getElementById('dispOsr').textContent = `${zone.osr.toFixed(1)}%`;
-  document.getElementById('dispBcr').textContent = `${zone.bcr.toFixed(0)}%`;
+  document.getElementById('dispOsr').textContent = `${fmt(zone.osr, 1)}%`;
+  document.getElementById('dispBcr').textContent = `${fmt(zone.bcr, 0)}%`;
 
   // --- Update Viewport Status Ribbon ---
   document.getElementById('ribbonWidth').textContent = `${fmt(state.widthMeters, 2)} ม.`;
@@ -1176,12 +1207,28 @@ function initEventListeners() {
     recalculateFeasibility();
   }
 
-  // 8.9 Zoning Selector
+  // 8.9 Zoning Selector (Real-time onChange / onInput binding)
   const zoneSelect = document.getElementById('zoneSelect');
-  zoneSelect.addEventListener('change', () => {
-    state.zoneKey = zoneSelect.value;
+  function applyZoneChange(rawVal) {
+    const nextKey = resolveZoneKey(rawVal || (zoneSelect ? zoneSelect.value : 'Y1'));
+    state.zoneKey = nextKey;
+    const z = BMA_ZONING_DATA[nextKey] || BMA_ZONING_DATA.Y1;
+    state.far = z.far;
+    state.osr = z.osr;
+    state.bcr = z.bcr;
+    if (zoneSelect && zoneSelect.value !== nextKey) {
+      zoneSelect.value = nextKey;
+    }
     recalculateFeasibility();
-  });
+  }
+  window.handleZoneChange = applyZoneChange;
+  if (zoneSelect) {
+    ['change', 'input', 'keyup'].forEach(evtName => {
+      zoneSelect.addEventListener(evtName, (e) => {
+        applyZoneChange(e.target.value);
+      });
+    });
+  }
 
   // 8.10 Typology Pills
   document.querySelectorAll('#typologyGrid .typo-pill').forEach(btn => {
