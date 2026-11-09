@@ -1148,6 +1148,58 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
+  flex-wrap: wrap;
+}
+
+/* Segmented View Switcher: [ 2D Plan | 3D Isometric ] */
+.view-mode-switcher {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+}
+
+.view-switch-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--ease-tactile);
+}
+
+.view-switch-btn:hover {
+  color: var(--text-main);
+  background: var(--bg-hover);
+}
+
+.view-switch-btn.active {
+  background: var(--bg-card);
+  color: var(--text-main);
+  border-color: var(--border-strong);
+  font-weight: 700;
+  box-shadow: var(--shadow-card);
+}
+
+.view-switch-btn:active {
+  transform: scale(0.97);
+}
+
+.toolbar-v-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border-subtle);
+  margin: 0 2px;
 }
 
 .board-tool-btn {
@@ -1255,6 +1307,11 @@ body {
 .legend-swatch.buildable {
   background: var(--cad-buildable-fill);
   border: 1.5px solid var(--cad-buildable-stroke);
+}
+
+.legend-swatch.massing {
+  background: linear-gradient(135deg, #F8FAFC 0%, #CBD5E1 100%);
+  border: 1.5px solid var(--cad-boundary-stroke);
 }
 
 /* Viewport Status Ribbon */

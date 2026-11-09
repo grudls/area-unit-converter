@@ -77,10 +77,6 @@
               <input type="number" step="any" min="1" id="inputTotalWah" value="50" class="hero-input">
               <span class="input-suffix">ตร.ว.</span>
             </div>
-            <div class="field-meta-chips">
-              <span class="meta-chip" id="chipSqm">200.00 ตร.ม.</span>
-              <span class="meta-chip" id="chipDeed">0 ไร่ 0 งาน 50 ตร.ว.</span>
-            </div>
           </div>
         </div>
 
@@ -111,6 +107,13 @@
               <span class="input-suffix">ตร.ม.</span>
             </div>
           </div>
+        </div>
+
+        <!-- Live Converted Area Summary Chips (Visible in All Unit Modes) -->
+        <div class="field-meta-chips" style="margin-top: 8px;">
+          <span class="meta-chip" id="chipSqm">200.00 ตร.ม.</span>
+          <span class="meta-chip" id="chipWah">50 ตร.ว.</span>
+          <span class="meta-chip" id="chipDeed">0 ไร่ 0 งาน 50 ตร.ว.</span>
         </div>
 
         <!-- Aspect Ratio & Width/Depth in Meters -->
@@ -305,10 +308,10 @@
         </div>
         <div class="gatekeeper-text-group">
           <div class="gatekeeper-title-row">
-            <span class="gatekeeper-pill" id="gatekeeperPill">ผ่านเกณฑ์</span>
-            <span class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางถนนสาธารณะ</span>
+            <span class="gatekeeper-pill" id="gatekeeperPill">✓ ถูกต้องตามกฎหมาย</span>
+            <span class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางสำหรับประเภทอาคารที่เลือก</span>
           </div>
-          <p class="gatekeeper-desc" id="gatekeeperDesc">ถนนกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคาร สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมือง</p>
+          <p class="gatekeeper-desc" id="gatekeeperDesc">ถนนสาธารณะกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคาร สามารถพัฒนาโครงการได้ตามข้อกำหนดผังเมืองและระยะร่น</p>
         </div>
       </div>
 
@@ -359,16 +362,30 @@
         </div>
       </div>
 
-      <!-- 2D Schematic Board (Architectural Dot Grid + Setback Visualizer) -->
+      <!-- 2D Schematic & 3D Isometric Board (Architectural Dot Grid + Setback Visualizer) -->
       <div class="schematic-board-shell">
         <div class="board-toolbar">
           <div class="board-title-group">
             <span class="board-dot"></span>
-            <span class="board-heading">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
+            <span class="board-heading" id="boardHeadingText">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
             <span class="board-scale-tag" id="canvasScaleTag">SCALE 1:200</span>
           </div>
 
           <div class="board-actions">
+            <!-- View Switcher: [ 2D Plan | 3D Isometric ] -->
+            <div class="view-mode-switcher" id="viewModeSwitcher" role="tablist" aria-label="สลับมุมมอง 2D / 3D">
+              <button class="view-switch-btn active" data-view-mode="2d" id="btnView2D" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                <span>2D Plan</span>
+              </button>
+              <button class="view-switch-btn" data-view-mode="3d" id="btnView3D" type="button">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                <span>3D Isometric</span>
+              </button>
+            </div>
+
+            <span class="toolbar-v-divider"></span>
+
             <button class="board-tool-btn active" id="btnToggleSetbackHatch" title="เปิด/ปิดเส้นแรเงาระยะร่น">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
               <span>ระยะร่น (Setbacks)</span>
@@ -407,6 +424,10 @@
             <div class="legend-item">
               <span class="legend-swatch buildable"></span>
               <span>ขอบเขตก่อสร้างได้ (Buildable Envelope)</span>
+            </div>
+            <div class="legend-item hidden" id="legendMassingItem">
+              <span class="legend-swatch massing"></span>
+              <span>ก้อนอาคาร 3D Massing (ตามความสูง H)</span>
             </div>
           </div>
 
