@@ -6,8 +6,8 @@
   <title>ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=3.0">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.1">
 </head>
 <body>
 
@@ -28,7 +28,7 @@
       <div class="landing-brand-pill">
         <span class="landing-logo-mark">📐</span>
         <span class="landing-logo-text">ARCH // STUDIO</span>
-        <span class="landing-version-tag">STUDIO 3.0</span>
+        <span class="landing-version-tag">STUDIO 3.1</span>
       </div>
 
       <div class="landing-nav-right">
@@ -101,38 +101,42 @@
       <!-- Eyebrow Badge -->
       <div class="landing-eyebrow">
         <span class="eyebrow-dot"></span>
-        <span id="landingEyebrowText">ARCHITECTURAL CODE &amp; MASSING ENGINE</span>
+        <span id="landingEyebrowText">SPATIAL INTELLIGENCE &amp; 3D ENVELOPE</span>
       </div>
 
-      <!-- Main Title -->
+      <!-- Main Title (Runway AI Aesthetic) -->
       <h1 class="landing-title">
-        <span class="landing-title-gradient">ARCH // STUDIO</span>
-        <span class="landing-title-sub" id="landingTitleSub">Bangkok Zoning &amp; 3D Envelope Simulator</span>
+        <span class="landing-hero-headline" id="landingHeroHeadline">Building Spatial Intelligence for Bangkok</span>
+        <span class="landing-title-sub" id="landingTitleSub">ARCH // STUDIO — Bangkok Zoning &amp; 3D Envelope Simulator</span>
       </h1>
 
       <!-- Bilingual Tagline -->
       <p class="landing-tagline-th" id="landingTaglinePrimary">
-        จำลองศักยภาพที่ดิน กฎหมายควบคุมอาคาร และมวลปริมาตร 3 มิติแบบเรียลไทม์
+        จำลองศักยภาพผังเมืองและมวลอาคารแห่งอนาคต
       </p>
       <p class="landing-tagline-en" id="landingTaglineSecondary">
-        Simulate Bangkok Building Codes &amp; 3D Massing in Real-Time
+        Simulate Bangkok Building Codes, Setbacks &amp; 3D Massing Envelopes in Real-Time
       </p>
 
-      <!-- Primary Launch Studio CTA Pill -->
+      <!-- Runway Style Capsule CTA Buttons: Primary + Secondary -->
       <div class="landing-cta-group">
         <button type="button" class="launch-studio-btn" id="launchStudioBtn">
-          <span class="launch-btn-text" id="launchStudioBtnText">เข้าสู่สตูดิโอทำงาน (Launch Studio)</span>
+          <span class="launch-btn-text" id="launchStudioBtnText">Launch Studio</span>
           <span class="launch-btn-arrow">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </span>
         </button>
+        <button type="button" class="secondary-studio-btn" id="viewRegsBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg>
+          <span id="viewRegsBtnText">ดูเกณฑ์กฎหมาย กทม. (View BMA Regulations)</span>
+        </button>
       </div>
 
-      <!-- Spec Feature Pills -->
+      <!-- Spec Feature Pills / Trust Bar -->
       <div class="landing-feature-strip">
-        <span class="landing-spec-chip" id="landingChip1">ผังเมืองรวม กทม. (FAR / OSR / BCR)</span>
-        <span class="landing-spec-chip" id="landingChip2">กฎกระทรวง ฉบับที่ 33 &amp; 55</span>
-        <span class="landing-spec-chip" id="landingChip3">Interactive 3D Isometric &amp; 2D CAD</span>
+        <span class="landing-spec-chip" id="landingChip1">BMA Comprehensive Zoning 2026</span>
+        <span class="landing-spec-chip" id="landingChip2">Ministerial Reg. No. 33 &amp; 55</span>
+        <span class="landing-spec-chip" id="landingChip3">Real-Time 3D Parametric Engine</span>
       </div>
     </div>
   </section>
@@ -151,14 +155,15 @@
         <div class="studio-brand-meta">
           <div class="studio-title-row">
             <span class="studio-brand">ARCH // STUDIO</span>
-            <span class="studio-tag" id="topbarVersionTag">STUDIO v3.0</span>
+            <span class="studio-status-dot" title="Live Parametric Engine"></span>
+            <span class="studio-tag" id="topbarVersionTag">STUDIO v3.1</span>
           </div>
           <p class="studio-subtitle" id="topbarSubtitle">Bangkok Zoning &amp; 3D Envelope Simulator</p>
         </div>
       </div>
 
-      <!-- Right Controls: Language Switcher [ TH | EN ], Reset, Copy, Theme -->
-      <div class="topbar-right">
+      <!-- Right Controls: Apple System UI Style Grouped Controls Dock -->
+      <div class="topbar-right studio-controls-dock">
         <!-- Seamless TH / EN Bilingual Switcher -->
         <div class="lang-switcher" id="topbarLangSwitcher" role="group" aria-label="สลับภาษา TH / EN">
           <button type="button" class="lang-btn active" data-lang-switch="th" id="btnLangTh">TH</button>
@@ -166,17 +171,17 @@
         </div>
 
         <button class="tactile-btn secondary" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
           <span class="btn-label-desktop" id="labelResetBtn">รีเซ็ต</span>
         </button>
 
         <button class="tactile-btn primary" id="copySummaryBtn" title="คัดลอกสรุปศักยภาพที่ดิน">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
           <span class="btn-label-desktop" id="labelCopyBtn">คัดลอกสรุป</span>
         </button>
 
         <button class="icon-toggle-btn" id="themeToggleBtn" title="สลับโหมดสว่าง/มืด (Studio Dark/Light)">
-          <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <svg id="themeIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
         </button>
       </div>
     </header>
@@ -187,7 +192,7 @@
       <!-- LEFT COLUMN: Clean Tool Panel (~360px, Independently Scrollable) -->
       <aside class="inspector-column" aria-label="Parameter Inspector">
         <div class="panel-section-header">
-          <span class="panel-badge" id="badgeInspector">PARAMETERS</span>
+          <span class="panel-micro-label" id="badgeInspector">PARAMETERS // 01-04</span>
           <h2 id="headingInspector">พารามิเตอร์ที่ดินและกฎหมาย</h2>
         </div>
 
@@ -434,7 +439,7 @@
       <!-- CENTER / RIGHT HERO STAGE: Runway Studio Viewport + Apple Bento HUD (~70%+) -->
       <section class="visualizer-column">
         <div class="panel-section-header">
-          <span class="panel-badge" id="badgeBoard">STUDIO VIEWPORT</span>
+          <span class="panel-micro-label" id="badgeBoard">STUDIO VIEWPORT // REAL-TIME</span>
           <h2 id="headingBoard">ผังวิเคราะห์ศักยภาพและมวลปริมาตรอาคาร 3 มิติ (Real-Time Envelope &amp; Massing)</h2>
         </div>
 
@@ -715,6 +720,6 @@
     <span id="studioToastMsg">คัดลอกข้อมูลสำเร็จ</span>
   </div>
 
-  <script src="script.js?v=3.0"></script>
+  <script src="script.js?v=3.1"></script>
 </body>
 </html>

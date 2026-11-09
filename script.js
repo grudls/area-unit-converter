@@ -1,5 +1,5 @@
 /**
- * ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator (v3.0)
+ * ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator (v3.1)
  * Runway AI Studio Workspace + Apple Minimalist Design + Bilingual (TH / EN)
  * Preserves 100% of BMA Zoning, Typology-Specific Setbacks, Two-Way Data Binding & Gatekeeper Logic
  */
@@ -112,18 +112,20 @@ function setAnimatedMetricText(id, formattedText, numericVal) {
 // --- 3. Seamless TH / EN Bilingual Dictionary & Static UI Translator ---
 const I18N_STATIC = {
   th: {
-    landingEyebrowText: 'ARCHITECTURAL CODE & MASSING ENGINE',
-    landingTitleSub: 'Bangkok Zoning & 3D Envelope Simulator',
-    landingTaglinePrimary: 'จำลองศักยภาพที่ดิน กฎหมายควบคุมอาคาร และมวลปริมาตร 3 มิติแบบเรียลไทม์',
-    landingTaglineSecondary: 'Simulate Bangkok Building Codes & 3D Massing in Real-Time',
-    launchStudioBtnText: 'เข้าสู่สตูดิโอทำงาน (Launch Studio)',
-    landingChip1: 'ผังเมืองรวม กทม. (FAR / OSR / BCR)',
-    landingChip2: 'กฎกระทรวง ฉบับที่ 33 & 55',
-    landingChip3: 'Interactive 3D Isometric & 2D CAD',
+    landingEyebrowText: 'SPATIAL INTELLIGENCE & 3D ENVELOPE',
+    landingHeroHeadline: 'จำลองศักยภาพผังเมืองและมวลอาคารแห่งอนาคต',
+    landingTitleSub: 'ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator',
+    landingTaglinePrimary: 'จำลองศักยภาพผังเมืองและมวลอาคารแห่งอนาคต',
+    landingTaglineSecondary: 'Building Spatial Intelligence for Bangkok — 3D Massing & Real-Time Codes',
+    launchStudioBtnText: 'เข้าสู่สตูดิโอ (Launch Studio)',
+    viewRegsBtnText: 'ดูเกณฑ์กฎหมาย กทม. (BMA Regulations)',
+    landingChip1: 'BMA Comprehensive Zoning 2026',
+    landingChip2: 'Ministerial Reg. No. 33 & 55',
+    landingChip3: 'Real-Time 3D Parametric Engine',
     topbarSubtitle: 'Bangkok Zoning & 3D Envelope Simulator',
     labelResetBtn: 'รีเซ็ต',
     labelCopyBtn: 'คัดลอกสรุป',
-    badgeInspector: 'PARAMETERS',
+    badgeInspector: 'PARAMETERS // 01-04',
     headingInspector: 'พารามิเตอร์ที่ดินและกฎหมาย',
     titleCard01: 'ขนาดแปลงและมิติที่ดิน',
     tabUnitWah: 'ตร.วา',
@@ -157,7 +159,7 @@ const I18N_STATIC = {
     optPricePerSqm: 'บาท / ตารางเมตร',
     optPricePerRai: 'บาท / ไร่',
     labelTotalLandValue: 'มูลค่าประเมินรวมทั้งแปลง',
-    badgeBoard: 'STUDIO VIEWPORT',
+    badgeBoard: 'STUDIO VIEWPORT // REAL-TIME',
     headingBoard: 'ผังวิเคราะห์ศักยภาพและมวลปริมาตรอาคาร 3 มิติ (Real-Time Envelope & Massing)',
     unitGfa: 'ตารางเมตร (SQ.M.)',
     unitBcr: 'ตารางเมตร (SQ.M.)',
@@ -207,18 +209,20 @@ const I18N_STATIC = {
     thMatrixStatus: 'สถานะการประเมิน'
   },
   en: {
-    landingEyebrowText: 'ARCHITECTURAL CODE & MASSING ENGINE',
-    landingTitleSub: 'Bangkok Zoning & 3D Envelope Simulator',
-    landingTaglinePrimary: 'Simulate Bangkok Building Codes & 3D Massing in Real-Time',
-    landingTaglineSecondary: 'จำลองศักยภาพที่ดิน กฎหมายควบคุมอาคาร และมวลปริมาตร 3 มิติแบบเรียลไทม์',
-    launchStudioBtnText: 'Launch Studio Workspace',
-    landingChip1: 'BMA Comprehensive Zoning (FAR / OSR / BCR)',
-    landingChip2: 'Ministerial Regulation No. 33 & 55',
-    landingChip3: 'Interactive 3D Isometric & 2D CAD',
+    landingEyebrowText: 'SPATIAL INTELLIGENCE & 3D ENVELOPE',
+    landingHeroHeadline: 'Building Spatial Intelligence for Bangkok',
+    landingTitleSub: 'ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator',
+    landingTaglinePrimary: 'Building Spatial Intelligence for Bangkok',
+    landingTaglineSecondary: 'Simulate Bangkok Building Codes, Setbacks & 3D Massing Envelopes in Real-Time',
+    launchStudioBtnText: 'Launch Studio',
+    viewRegsBtnText: 'View BMA Regulations',
+    landingChip1: 'BMA Comprehensive Zoning 2026',
+    landingChip2: 'Ministerial Reg. No. 33 & 55',
+    landingChip3: 'Real-Time 3D Parametric Engine',
     topbarSubtitle: 'Bangkok Zoning & 3D Envelope Simulator',
     labelResetBtn: 'Reset',
     labelCopyBtn: 'Copy Summary',
-    badgeInspector: 'PARAMETERS',
+    badgeInspector: 'PARAMETERS // 01-04',
     headingInspector: 'Parcel & Building Code Parameters',
     titleCard01: 'Parcel Area & Dimensions',
     tabUnitWah: 'Sq.Wah',
@@ -252,7 +256,7 @@ const I18N_STATIC = {
     optPricePerSqm: 'THB / Sq.m.',
     optPricePerRai: 'THB / Rai',
     labelTotalLandValue: 'Estimated Total Land Value',
-    badgeBoard: 'STUDIO VIEWPORT',
+    badgeBoard: 'STUDIO VIEWPORT // REAL-TIME',
     headingBoard: 'Real-Time Feasibility & 3D Massing Envelope',
     unitGfa: 'SQUARE METERS (SQ.M.)',
     unitBcr: 'SQUARE METERS (SQ.M.)',
@@ -1392,11 +1396,31 @@ function initEventListeners() {
   // 9.0 Landing View Launch & Reopen + Bilingual Switcher
   const landingView = document.getElementById('landingView');
   const launchBtn = document.getElementById('launchStudioBtn');
+  const viewRegsBtn = document.getElementById('viewRegsBtn');
   const reopenBtn = document.getElementById('reopenLandingBtn');
 
   if (launchBtn && landingView) {
     launchBtn.addEventListener('click', () => {
       landingView.classList.add('dismissed');
+    });
+  }
+  if (viewRegsBtn && landingView) {
+    viewRegsBtn.addEventListener('click', () => {
+      landingView.classList.add('dismissed');
+      const drawerBody = document.getElementById('drawerBody');
+      const drawerStateTag = document.getElementById('drawerStateTag');
+      if (drawerBody && drawerBody.classList.contains('collapsed')) {
+        drawerBody.classList.remove('collapsed');
+        if (drawerStateTag) {
+          drawerStateTag.textContent = isEn() ? 'Hide details' : 'ซ่อนรายละเอียด';
+        }
+      }
+      const drawerCard = document.getElementById('legalDrawerCard');
+      if (drawerCard) {
+        setTimeout(() => {
+          drawerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 150);
+      }
     });
   }
   if (reopenBtn && landingView) {
