@@ -1,6 +1,6 @@
 /* ==========================================================================
-   ARCH // STUDIO (v4.0) — International Studio Grade (Runway AI Reference)
-   Monochrome Neutral Palette + Locked 100vh Viewport + Minimalist Typography
+   ARCH // STUDIO (v5.0) — Unified Dark Frosted Topbar & Frameless Workspace
+   Runway AI Studio + Apple Minimalist Segmented Controls & Floating Glass HUD
    ========================================================================== */
 
 :root {
@@ -9,7 +9,7 @@
   --bg-card: #FFFFFF;
   --bg-subtle: #F4F4F5;
   --bg-hover: #E4E4E7;
-  --bg-input: #FAFAFA;
+  --bg-input: #F8F8FA;
 
   /* Typography Colors */
   --text-main: #09090B;
@@ -24,11 +24,9 @@
 
   /* Soft Ambient Occlusion Shadows */
   --shadow-tactile: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-  --shadow-active: 0 6px 16px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-  --shadow-Hover: 0 8px 20px rgba(0, 0, 0, 0.06), 0 2px 4px rgba(0, 0, 0, 0.03);
-  --shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-active: 0 3px 10px rgba(0, 0, 0, 0.09), 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.03);
-  --shadow-dock: 0 10px 28px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  --shadow-dock: 0 12px 32px rgba(0, 0, 0, 0.10), 0 2px 6px rgba(0, 0, 0, 0.05);
 
   /* Blueprint / CAD Canvas Tokens */
   --dot-grid-bg: #FAFAFA;
@@ -42,10 +40,10 @@
   --cad-buildable-stroke: #059669;
 
   /* Glassmorphism Tokens */
-  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg: rgba(255, 255, 255, 0.84);
   --glass-border: rgba(9, 9, 11, 0.08);
 
-  /* Minimalist Typography (Regular 400 to Medium 500) */
+  /* Minimalist Typography */
   --font-sans: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-thai: 'IBM Plex Sans Thai', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
@@ -64,10 +62,10 @@
 /* Monochrome Neutral Dark Palette (Runway Studio Dark) */
 [data-theme="dark"] {
   --bg-workspace: #09090B;
-  --bg-card: #121215;
-  --bg-subtle: #18181B;
+  --bg-card: #111114;
+  --bg-subtle: #18181C;
   --bg-hover: #27272A;
-  --bg-input: #0D0D10;
+  --bg-input: #141418;
 
   --text-main: #FAFAFA;
   --text-secondary: #A1A1AA;
@@ -79,13 +77,11 @@
   --border-strong: #FAFAFA;
 
   --shadow-tactile: 0 4px 14px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-active: 0 8px 24px rgba(0, 0, 0, 0.6), 0 2px 6px rgba(0, 0, 0, 0.4);
-  --shadow-Hover: 0 8px 22px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
-  --shadow-inset: inset 0 1px 3px rgba(0, 0, 0, 0.5);
+  --shadow-active: 0 4px 12px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.4);
   --shadow-card: 0 2px 6px rgba(0, 0, 0, 0.3);
-  --shadow-dock: 0 12px 32px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-dock: 0 14px 36px rgba(0, 0, 0, 0.65), 0 2px 8px rgba(0, 0, 0, 0.45);
 
-  --dot-grid-bg: #0C0C0E;
+  --dot-grid-bg: #0C0C0F;
   --dot-grid-color: #27272A;
   --cad-road-bg: #18181B;
   --cad-road-line: #52525B;
@@ -95,8 +91,8 @@
   --cad-buildable-fill: rgba(52, 211, 153, 0.14);
   --cad-buildable-stroke: #34D399;
 
-  --glass-bg: rgba(18, 18, 21, 0.88);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(18, 18, 22, 0.84);
+  --glass-border: rgba(255, 255, 255, 0.10);
 }
 
 /* ==========================================================================
@@ -138,7 +134,7 @@ html, body {
 }
 
 /* ==========================================================================
-   1. CINEMATIC LANDING VIEW (Runway AI Inner Rounded Bezel & Atmospheric Canvas)
+   1. CINEMATIC LANDING VIEW (Runway AI Inner Bezel & Bangkok Skyline)
    ========================================================================== */
 .landing-overlay {
   position: fixed;
@@ -165,9 +161,8 @@ html, body {
   visibility: hidden;
 }
 
-/* Top Minimal Bar Above Bezel */
 .landing-outer-nav {
-  height: 54px;
+  height: 56px;
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -175,38 +170,49 @@ html, body {
   padding: 0 8px;
 }
 
+.landing-brand-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .landing-brand-wordmark {
   font-family: var(--font-sans);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   color: #FAFAFA;
 }
 
-.landing-nav-center {
+.landing-nav-center,
+.topbar-center {
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 12px;
   font-family: var(--font-sans);
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 400;
-  letter-spacing: 0.1em;
-  color: #A1A1AA;
+  letter-spacing: 0.11em;
+  color: rgba(250, 250, 250, 0.52);
   text-transform: uppercase;
+}
+
+.nav-dot-sep {
+  color: rgba(250, 250, 250, 0.25);
 }
 
 .landing-nav-right {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .landing-top-try-btn {
-  background: #FAFAFA;
+  background: #FFFFFF;
   color: #09090B;
   border: none;
-  border-radius: var(--radius-xs);
-  padding: 6px 13px;
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
   font-family: var(--font-sans);
   font-size: 0.74rem;
   font-weight: 500;
@@ -259,7 +265,6 @@ html, body {
   transform: scale(1.025);
 }
 
-/* Cinematic Dark Gradient Overlay (from-neutral-950 via-neutral-950/60 to-neutral-950/40) */
 .landing-hero-gradient-overlay {
   position: absolute;
   inset: 0;
@@ -274,7 +279,6 @@ html, body {
   z-index: 2;
 }
 
-/* Ambient Vignette Overlay for Corner Depth */
 .landing-hero-vignette-overlay {
   position: absolute;
   inset: 0;
@@ -319,7 +323,6 @@ html, body {
   text-shadow: 0 1px 12px rgba(0, 0, 0, 0.65);
 }
 
-/* Paired Runway Capsule CTA Buttons */
 .landing-cta-group {
   display: flex;
   align-items: center;
@@ -404,53 +407,7 @@ html, body {
 }
 
 /* ==========================================================================
-   LANGUAGE SWITCHER ([ TH | EN ])
-   ========================================================================== */
-.lang-switcher {
-  display: inline-flex;
-  align-items: center;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-full);
-  padding: 2px;
-  gap: 2px;
-}
-
-.landing-lang {
-  background: rgba(255, 255, 255, 0.07);
-  border-color: rgba(255, 255, 255, 0.14);
-}
-
-.lang-btn {
-  border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  font-weight: 500;
-  padding: 3px 9px;
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: var(--ease-tactile);
-}
-
-.landing-lang .lang-btn {
-  color: #A1A1AA;
-}
-
-.lang-btn.active {
-  background: var(--bg-card);
-  color: var(--text-main);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.landing-lang .lang-btn.active {
-  background: #FAFAFA;
-  color: #09090B;
-}
-
-/* ==========================================================================
-   2. STUDIO WORKSPACE SHELL (Locked 100vh Full-Screen Web Application)
+   2. UNIFIED DARK FROSTED GLASS TOPBAR & CAPSULE CONTROLS
    ========================================================================== */
 .studio-app-shell {
   height: 100vh;
@@ -461,18 +418,21 @@ html, body {
   background: var(--bg-workspace);
 }
 
-/* Ultra-Clean Compact Topbar (48px Height) */
+/* Always Dark Frosted Glassmorphism in BOTH Light & Dark Modes */
 .studio-topbar {
-  height: 48px;
+  height: 56px;
   flex-shrink: 0;
   z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
-  background: var(--bg-card);
-  border-bottom: 1px solid var(--border-subtle);
-  gap: 12px;
+  padding: 0 18px;
+  background: rgba(9, 9, 11, 0.92);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #FAFAFA;
+  gap: 16px;
 }
 
 .topbar-left {
@@ -482,21 +442,21 @@ html, body {
 }
 
 .studio-monogram {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-xs);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: var(--ease-tactile);
 }
 
 .studio-monogram:hover {
-  background: var(--bg-hover);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .studio-brand-meta {
@@ -505,18 +465,12 @@ html, body {
   gap: 8px;
 }
 
-.studio-title-row {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-}
-
 .studio-brand {
   font-family: var(--font-sans);
   font-weight: 500;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   letter-spacing: 0.1em;
-  color: var(--text-main);
+  color: #FFFFFF;
   text-transform: uppercase;
 }
 
@@ -525,93 +479,127 @@ html, body {
   height: 6px;
   border-radius: 50%;
   background: #10B981;
-  box-shadow: 0 0 6px rgba(16, 185, 129, 0.65);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.85);
 }
 
-.studio-tag {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  font-weight: 400;
-  padding: 1px 6px;
-  border-radius: var(--radius-xs);
-  background: var(--bg-subtle);
-  color: var(--text-muted);
-  border: 1px solid var(--border-subtle);
-}
-
-.studio-divider-slash {
-  color: var(--border-subtle);
-  font-size: 0.8rem;
-}
-
-.studio-subtitle {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
-  font-weight: 400;
-}
-
-/* Right Controls Dock */
+/* Right Action Capsules inside Dark Topbar */
 .topbar-right.studio-controls-dock {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 8px;
 }
 
-.tactile-btn {
+/* Dark Glass Language Switcher [ TH | EN ] */
+.lang-switcher.dark-glass-lang {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  height: 28px;
-  padding: 0 11px;
-  border-radius: var(--radius-xs);
-  font-family: var(--font-thai);
-  font-size: 0.74rem;
-  font-weight: 400;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-full);
+  padding: 2px;
+  gap: 2px;
+}
+
+.dark-glass-lang .lang-btn {
+  border: none;
+  background: transparent;
+  color: rgba(250, 250, 250, 0.6);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: var(--ease-tactile);
 }
 
-.tactile-btn.secondary {
-  background: var(--bg-subtle);
-  color: var(--text-main);
-  border: 1px solid var(--border-subtle);
+.dark-glass-lang .lang-btn:hover {
+  color: #FFFFFF;
 }
 
-.tactile-btn.secondary:hover {
-  background: var(--bg-hover);
+.dark-glass-lang .lang-btn.active {
+  background: #FFFFFF;
+  color: #09090B;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
 }
 
-.tactile-btn.primary {
-  background: var(--text-main);
-  color: var(--text-inverse);
-  border: 1px solid var(--border-strong);
-}
-
-.tactile-btn.primary:hover {
-  opacity: 0.9;
-}
-
-.icon-toggle-btn {
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-xs);
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-main);
-  display: flex;
+/* Reset Icon Capsule */
+.topbar-icon-capsule {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(250, 250, 250, 0.85);
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition: var(--ease-tactile);
 }
 
-.icon-toggle-btn:hover {
-  background: var(--bg-hover);
+.topbar-icon-capsule:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+/* Theme Mode Capsule [ ☀️ Light / 🌙 Dark ] */
+.topbar-theme-capsule {
+  height: 30px;
+  padding: 0 12px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(250, 250, 250, 0.9);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--ease-tactile);
+}
+
+.topbar-theme-capsule:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: #FFFFFF;
+}
+
+html:not([data-theme="dark"]) .theme-label-dark {
+  display: none;
+}
+
+[data-theme="dark"] .theme-label-light {
+  display: none;
+}
+
+/* Primary Export Summary White Pill */
+.topbar-white-pill {
+  height: 30px;
+  padding: 0 14px;
+  border-radius: var(--radius-full);
+  background: #FFFFFF;
+  color: #09090B;
+  border: 1px solid #FFFFFF;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-thai);
+  font-size: 0.74rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--ease-tactile);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.topbar-white-pill:hover {
+  background: #E4E4E7;
+  transform: translateY(-1px);
 }
 
 /* ==========================================================================
-   3. WORKSPACE SPLIT LAYOUT (340px Sidebar + 75%+ Hero Stage)
+   3. FRAMELESS WORKSPACE SPLIT LAYOUT (340px Sidebar + Full-Bleed Stage)
    ========================================================================== */
 .workspace-grid {
   flex: 1;
@@ -622,16 +610,16 @@ html, body {
   overflow: hidden;
 }
 
-/* LEFT COLUMN: Independently Scrollable Tool Sidebar */
+/* LEFT COLUMN: Frameless Inspector Sidebar with Hairline Dividers */
 .inspector-column {
   height: 100%;
   overflow-y: auto;
   background: var(--bg-card);
   border-right: 1px solid var(--border-subtle);
-  padding: 12px;
+  padding: 4px 16px 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
   scrollbar-width: thin;
 }
 
@@ -644,25 +632,32 @@ html, body {
   border-radius: 999px;
 }
 
+/* Frameless Section Block (Zero Container Hell) */
 .inspector-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 12px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 15px 0;
+  box-shadow: none;
+}
+
+.inspector-card.inspector-card-last {
+  border-bottom: none;
 }
 
 .card-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 9px;
+  margin-bottom: 10px;
   gap: 6px;
 }
 
 .card-caption {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
 }
 
 .caption-index {
@@ -670,9 +665,6 @@ html, body {
   font-size: 0.64rem;
   font-weight: 500;
   color: var(--text-muted);
-  background: var(--bg-subtle);
-  padding: 1px 5px;
-  border-radius: 4px;
 }
 
 .caption-title {
@@ -681,13 +673,12 @@ html, body {
   color: var(--text-main);
 }
 
-/* Mini Unit Mode Tabs */
+/* Mini Unit Mode Segmented Capsule */
 .mini-tab-group {
   display: inline-flex;
   background: var(--bg-subtle);
   padding: 2px;
-  border-radius: var(--radius-xs);
-  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
 }
 
 .mini-tab {
@@ -695,10 +686,10 @@ html, body {
   background: transparent;
   color: var(--text-muted);
   font-family: var(--font-thai);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   font-weight: 400;
-  padding: 2px 7px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
   cursor: pointer;
   transition: var(--ease-tactile);
 }
@@ -716,10 +707,10 @@ html, body {
 .dim-label-row label,
 .form-label {
   display: block;
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   font-weight: 400;
   color: var(--text-secondary);
-  margin-bottom: 4px;
+  margin-bottom: 5px;
 }
 
 .input-with-suffix {
@@ -733,9 +724,9 @@ html, body {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 6px 44px 6px 10px;
+  padding: 7px 44px 7px 11px;
   font-family: var(--font-sans);
-  font-size: 1.1rem;
+  font-size: 1.12rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text-main);
@@ -748,13 +739,14 @@ html, body {
   background: var(--bg-input);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 5px 28px 5px 8px;
+  padding: 6px 28px 6px 9px;
   font-family: var(--font-sans);
   font-size: 0.84rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text-main);
   outline: none;
+  transition: var(--ease-tactile);
 }
 
 .hero-input:focus, .sub-input:focus {
@@ -779,17 +771,17 @@ html, body {
 .field-meta-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 7px;
+  gap: 5px;
+  margin-top: 8px;
 }
 
 .meta-chip {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.64rem;
   color: var(--text-secondary);
   background: var(--bg-subtle);
-  padding: 2px 7px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
   font-variant-numeric: tabular-nums;
 }
 
@@ -797,9 +789,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 8px;
-  margin-top: 9px;
-  padding-top: 9px;
-  border-top: 1px solid var(--border-subtle);
+  margin-top: 10px;
 }
 
 .dim-label-row {
@@ -810,21 +800,21 @@ html, body {
 
 .dim-tag {
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.64rem;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
 }
 
 .aspect-link-bar {
-  margin-top: 7px;
+  margin-top: 8px;
 }
 
 .aspect-sync-btn {
   width: 100%;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xs);
-  padding: 4px 8px;
+  background: transparent;
+  border: 1px dashed var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 5px 8px;
   font-family: var(--font-thai);
   font-size: 0.68rem;
   font-weight: 400;
@@ -834,26 +824,25 @@ html, body {
 }
 
 .aspect-sync-btn:hover {
-  background: var(--bg-hover);
+  background: var(--bg-subtle);
   color: var(--text-main);
 }
 
-/* Card 2: Road Controls */
+/* Section 02: Road Controls */
 .road-current-badge {
   font-family: var(--font-sans);
   font-size: 0.72rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
   color: var(--text-main);
-  padding: 2px 8px;
+  padding: 2px 9px;
   border-radius: var(--radius-full);
 }
 
 .road-control-wrap {
   position: relative;
-  margin: 12px 0 6px;
+  margin: 10px 0 6px;
 }
 
 .road-floating-pill {
@@ -908,17 +897,20 @@ html, body {
 .segmented-pill-row {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
-  gap: 4px;
+  gap: 3px;
+  background: var(--bg-subtle);
+  padding: 3px;
+  border-radius: var(--radius-full);
   margin-top: 6px;
 }
 
 .tactile-pill {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-xs);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
   padding: 4px 2px;
   font-family: var(--font-mono);
-  font-size: 0.64rem;
+  font-size: 0.63rem;
   font-weight: 400;
   color: var(--text-secondary);
   cursor: pointer;
@@ -926,10 +918,10 @@ html, body {
 }
 
 .tactile-pill.active {
-  background: var(--text-main);
-  color: var(--text-inverse);
-  border-color: var(--border-strong);
+  background: var(--bg-card);
+  color: var(--text-main);
   font-weight: 500;
+  box-shadow: var(--shadow-active);
 }
 
 .field-help-text {
@@ -939,7 +931,7 @@ html, body {
   line-height: 1.35;
 }
 
-/* Card 3: Zoning & Typology */
+/* Section 03: Zoning & macOS Segmented Capsule Slider */
 .tactile-select {
   width: 100%;
   background: var(--bg-input);
@@ -958,11 +950,9 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px;
+  padding: 8px 4px;
   margin-top: 8px;
+  border-bottom: 1px solid var(--border-subtle);
 }
 
 .spec-cell {
@@ -974,14 +964,14 @@ html, body {
 
 .spec-key {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.57rem;
   color: var(--text-muted);
   letter-spacing: 0.06em;
 }
 
 .spec-val {
   font-family: var(--font-sans);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text-main);
@@ -989,45 +979,51 @@ html, body {
 
 .spec-divider {
   width: 1px;
-  height: 18px;
+  height: 16px;
   background: var(--border-subtle);
 }
 
-.typology-grid {
+/* macOS-Style Segmented Capsule Slider for Typology */
+.typology-segmented-slider {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 5px;
+  gap: 3px;
+  background: var(--bg-subtle);
+  padding: 3px;
+  border-radius: var(--radius-full);
 }
 
 .typo-pill {
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 7px 4px;
-  display: flex;
-  flex-direction: column;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 6px 6px;
+  display: inline-flex;
   align-items: center;
-  gap: 3px;
+  justify-content: center;
+  gap: 4px;
   cursor: pointer;
   transition: var(--ease-tactile);
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .typo-icon {
-  font-size: 1rem;
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
 .typo-name {
   font-family: var(--font-thai);
-  font-size: 0.66rem;
+  font-size: 0.67rem;
   font-weight: 400;
   color: var(--text-secondary);
-  text-align: center;
-  line-height: 1.2;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .typo-pill.active {
   background: var(--bg-card);
-  border-color: var(--border-strong);
   box-shadow: var(--shadow-active);
 }
 
@@ -1036,7 +1032,7 @@ html, body {
   font-weight: 500;
 }
 
-/* Card 4: Valuation */
+/* Section 04: Valuation */
 .fold-toggle-btn {
   background: transparent;
   border: none;
@@ -1053,11 +1049,9 @@ html, body {
 }
 
 .price-summary-badge {
-  margin-top: 8px;
-  padding: 6px 10px;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-sm);
+  margin-top: 9px;
+  padding: 7px 2px 0;
+  border-top: 1px dashed var(--border-subtle);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1070,50 +1064,50 @@ html, body {
 
 .ps-value {
   font-family: var(--font-sans);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   font-weight: 500;
   font-variant-numeric: tabular-nums;
   color: var(--text-main);
 }
 
 /* ==========================================================================
-   4. RIGHT STAGE: SLEEK HUD STRIP + FULL VIEWPORT 3D/2D CANVAS (75%+ Area)
+   4. RIGHT STAGE: SLEEK LOW-PROFILE METRIC HUD + FULL-BLEED 3D/2D CANVAS
    ========================================================================== */
 .visualizer-column {
   height: 100%;
   min-width: 0;
   display: flex;
   flex-direction: column;
-  padding: 10px 14px;
-  gap: 8px;
+  padding: 0;
+  gap: 0;
   overflow: hidden;
   position: relative;
 }
 
-/* Sleek Top HUD Strip */
+/* Sleek Low-Profile Metric HUD Ribbon (Frameless Bar) */
 .studio-hud-strip {
   flex-shrink: 0;
+  min-height: 48px;
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 6px 16px;
   display: grid;
-  grid-template-columns: minmax(260px, 1.15fr) minmax(0, 2.2fr);
-  gap: 8px;
-  align-items: stretch;
+  grid-template-columns: minmax(220px, 1fr) minmax(0, 2fr);
+  gap: 16px;
+  align-items: center;
 }
 
-/* Monochrome Gatekeeper Status Bar with Accent Status Dot */
+/* Compact Inline Gatekeeper Status */
 .road-gatekeeper-banner {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 8px 12px;
   display: flex;
   align-items: center;
-  gap: 10px;
-  box-shadow: var(--shadow-card);
+  gap: 8px;
+  min-width: 0;
 }
 
 .gatekeeper-icon-box {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1122,17 +1116,13 @@ html, body {
 }
 
 .road-gatekeeper-banner.pass .gatekeeper-icon-box {
-  background: rgba(16, 185, 129, 0.12);
+  background: rgba(16, 185, 129, 0.14);
   color: #10B981;
 }
 
 .road-gatekeeper-banner.warning .gatekeeper-icon-box {
   background: rgba(245, 158, 11, 0.14);
   color: #F59E0B;
-}
-
-.road-gatekeeper-banner.violation {
-  border-color: rgba(244, 63, 94, 0.45);
 }
 
 .road-gatekeeper-banner.violation .gatekeeper-icon-box {
@@ -1148,7 +1138,7 @@ html, body {
 .gatekeeper-header-row {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1158,7 +1148,7 @@ html, body {
   font-family: var(--font-thai);
   font-size: 0.65rem;
   font-weight: 500;
-  padding: 1px 7px;
+  padding: 2px 8px;
   border-radius: var(--radius-full);
   background: var(--bg-subtle);
   color: var(--text-main);
@@ -1166,7 +1156,7 @@ html, body {
 
 .road-gatekeeper-banner.pass .gatekeeper-pill {
   color: #10B981;
-  background: rgba(16, 185, 129, 0.1);
+  background: rgba(16, 185, 129, 0.12);
 }
 
 .road-gatekeeper-banner.warning .gatekeeper-pill {
@@ -1180,37 +1170,26 @@ html, body {
 }
 
 .gatekeeper-title {
-  font-size: 0.75rem;
+  font-size: 0.73rem;
   font-weight: 500;
   color: var(--text-main);
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.gatekeeper-desc {
-  font-size: 0.68rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Sleek 4-Metric Ribbon */
+/* Sleek 4-Metric Inline HUD Cells */
 .hero-metrics-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 0;
 }
 
 .metric-tile {
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
-  padding: 7px 11px;
+  padding: 2px 14px;
+  border-left: 1px solid var(--border-subtle);
   display: flex;
   flex-direction: column;
   justify-content: center;
-  box-shadow: var(--shadow-card);
 }
 
 .tile-header {
@@ -1222,7 +1201,7 @@ html, body {
 
 .tile-code {
   font-family: var(--font-mono);
-  font-size: 0.58rem;
+  font-size: 0.56rem;
   font-weight: 400;
   color: var(--text-muted);
   letter-spacing: 0.05em;
@@ -1230,33 +1209,29 @@ html, body {
 
 .tile-tag {
   font-family: var(--font-mono);
-  font-size: 0.54rem;
+  font-size: 0.52rem;
   font-weight: 400;
-  padding: 1px 5px;
-  border-radius: 4px;
-  background: var(--bg-subtle);
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .tile-main-row {
   display: flex;
   align-items: baseline;
   gap: 5px;
-  margin: 1px 0;
 }
 
 .tile-metric-value {
   font-family: var(--font-sans);
-  font-size: 1.25rem;
+  font-size: 1.22rem;
   font-weight: 500;
   letter-spacing: -0.02em;
-  line-height: 1.15;
+  line-height: 1.1;
   color: var(--text-main);
   font-variant-numeric: tabular-nums;
 }
 
 #valHeightLimit {
-  font-size: 1.05rem;
+  font-size: 1.02rem;
 }
 
 .tile-metric-value.gfa-violation {
@@ -1264,98 +1239,28 @@ html, body {
   text-decoration: line-through;
 }
 
-.metric-tile.tile-violation {
-  border-color: rgba(244, 63, 94, 0.45) !important;
-}
-
 .tile-metric-unit {
   font-family: var(--font-mono);
-  font-size: 0.6rem;
+  font-size: 0.58rem;
   color: var(--text-muted);
-}
-
-.tile-footer-note {
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 /* ==========================================================================
-   5. HERO VIEWPORT CANVAS (Expands to 75-80%+ of Screen Height)
+   5. FULL-BLEED VIEWPORT CANVAS & FLOATING GLASS TOOLBAR
    ========================================================================== */
 .schematic-board-shell {
   flex: 1;
   min-height: 0;
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
+  background: var(--dot-grid-bg);
+  border: none;
+  border-radius: 0;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   position: relative;
-  box-shadow: var(--shadow-tactile);
 }
 
-.board-toolbar {
-  height: 36px;
-  flex-shrink: 0;
-  padding: 0 14px;
-  border-bottom: 1px solid var(--border-subtle);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.board-title-group {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.board-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #10B981;
-}
-
-.board-heading {
-  font-family: var(--font-sans);
-  font-size: 0.7rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--text-main);
-}
-
-.board-scale-tag {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  color: var(--text-muted);
-  background: var(--bg-subtle);
-  padding: 1px 7px;
-  border-radius: var(--radius-full);
-}
-
-.board-live-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-mono);
-  font-size: 0.6rem;
-  color: var(--text-muted);
-  letter-spacing: 0.06em;
-}
-
-.live-pulse {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: #10B981;
-}
-
-/* Interactive Canvas Stage */
+/* Edge-to-Edge Interactive Canvas */
 .schematic-viewport {
   flex: 1;
   min-height: 0;
@@ -1376,20 +1281,20 @@ html, body {
   display: block;
 }
 
-/* Floating Controls Dock on Canvas */
+/* Floating Glass Toolbar Over Canvas */
 .floating-controls-dock {
   position: absolute;
-  top: 12px;
+  top: 14px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 20;
+  z-index: 25;
   display: inline-flex;
   align-items: center;
   gap: 4px;
   padding: 4px 6px;
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-full);
   box-shadow: var(--shadow-dock);
@@ -1397,6 +1302,9 @@ html, body {
 
 .view-mode-switcher {
   display: inline-flex;
+  background: var(--bg-subtle);
+  padding: 2px;
+  border-radius: var(--radius-full);
   gap: 2px;
 }
 
@@ -1405,9 +1313,9 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 4px 10px;
+  padding: 4px 11px;
   border-radius: var(--radius-full);
-  border: 1px solid transparent;
+  border: none;
   background: transparent;
   font-family: var(--font-sans);
   font-size: 0.7rem;
@@ -1421,26 +1329,26 @@ html, body {
 .board-tool-btn.active {
   background: var(--bg-card);
   color: var(--text-main);
-  border-color: var(--border-subtle);
   font-weight: 500;
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-active);
 }
 
 .toolbar-v-divider {
   width: 1px;
   height: 16px;
   background: var(--border-subtle);
-  margin: 0 2px;
+  margin: 0 3px;
 }
 
 /* Floating Legend */
 .viewport-legend {
   position: absolute;
-  top: 12px;
-  left: 12px;
+  top: 14px;
+  left: 14px;
   z-index: 15;
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 8px 11px;
@@ -1453,7 +1361,7 @@ html, body {
   display: flex;
   align-items: center;
   gap: 7px;
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   color: var(--text-secondary);
 }
 
@@ -1478,13 +1386,14 @@ html, body {
   right: 0;
   z-index: 15;
   background: var(--glass-bg);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid var(--border-subtle);
-  padding: 5px 16px;
+  padding: 5px 18px;
   display: flex;
   justify-content: space-between;
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.67rem;
   color: var(--text-secondary);
 }
 
@@ -1496,7 +1405,7 @@ html, body {
 }
 
 /* ==========================================================================
-   6. SLIDE-OVER COLLAPSIBLE LEGAL DRAWER (Anchored at Bottom of Viewport)
+   6. SLIDE-OVER COLLAPSIBLE LEGAL DRAWER
    ========================================================================== */
 .legal-drawer-card {
   position: relative;
@@ -1507,8 +1416,8 @@ html, body {
 }
 
 .drawer-header {
-  height: 36px;
-  padding: 0 16px;
+  height: 34px;
+  padding: 0 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -1532,11 +1441,11 @@ html, body {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--text-main);
+  background: #10B981;
 }
 
 .drawer-title {
-  font-size: 0.74rem;
+  font-size: 0.73rem;
   font-weight: 500;
   color: var(--text-main);
 }
@@ -1548,7 +1457,7 @@ html, body {
 }
 
 .drawer-state-tag {
-  font-size: 0.66rem;
+  font-size: 0.65rem;
   color: var(--text-muted);
 }
 
@@ -1568,14 +1477,14 @@ html, body {
 /* Slide-Over Panel Body when Expanded */
 .drawer-body {
   position: absolute;
-  bottom: 36px;
+  bottom: 34px;
   left: 0;
   right: 0;
   max-height: 58vh;
   overflow-y: auto;
   background: var(--glass-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
   border-top: 1px solid var(--border-subtle);
   box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.15);
   padding: 14px 18px 18px;
@@ -1755,8 +1664,9 @@ html, body {
   bottom: 20px;
   right: 20px;
   z-index: 3000;
-  background: var(--text-main);
-  color: var(--text-inverse);
+  background: #09090B;
+  color: #FAFAFA;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 8px 14px;
   border-radius: var(--radius-full);
   font-size: 0.75rem;
@@ -1797,16 +1707,18 @@ html, body {
   }
   .hero-metrics-grid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
   }
   .schematic-viewport {
-    min-height: 440px;
+    min-height: 460px;
   }
   .landing-editorial-grid {
     grid-template-columns: 1fr;
     padding: 28px 24px;
     gap: 20px;
   }
-  .landing-nav-center {
+  .landing-nav-center,
+  .topbar-center {
     display: none;
   }
 }

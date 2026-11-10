@@ -8,33 +8,36 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4.0">
+  <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
   <!-- ========================================================================
-       1. CINEMATIC ENTRY LANDING VIEW (Runway AI Inner Rounded Bezel & Editorial Layout)
+       1. CINEMATIC ENTRY LANDING VIEW (Runway AI Inner Rounded Bezel & Bangkok Skyline)
        ======================================================================== -->
   <section class="landing-overlay" id="landingView" aria-label="ARCH // STUDIO Intro">
     <!-- Top Minimal Bar Outside the Rounded Bezel -->
     <header class="landing-outer-nav">
       <div class="landing-brand-left">
         <span class="landing-brand-wordmark">ARCH // STUDIO</span>
+        <span class="studio-status-dot" title="Real-time Engine Active"></span>
       </div>
 
       <div class="landing-nav-center" aria-hidden="true">
-        <span id="landingChip1">BMA ZONING 2026</span>
-        <span id="landingChip2">MINISTERIAL REG. 33 &amp; 55</span>
-        <span id="landingChip3">3D PARAMETRIC ENVELOPE</span>
+        <span id="landingChip1">BMA COMPREHENSIVE ZONING 2026</span>
+        <span class="nav-dot-sep">&bull;</span>
+        <span id="landingChip2">REG. 33 &amp; 55</span>
+        <span class="nav-dot-sep">&bull;</span>
+        <span id="landingChip3">REAL-TIME 3D VIEWPORT</span>
       </div>
 
       <div class="landing-nav-right">
-        <div class="lang-switcher landing-lang" role="group" aria-label="Language Switcher">
+        <div class="lang-switcher dark-glass-lang" role="group" aria-label="Language Switcher">
           <button type="button" class="lang-btn active" data-lang-switch="th">TH</button>
           <button type="button" class="lang-btn" data-lang-switch="en">EN</button>
         </div>
         <button type="button" class="landing-top-try-btn" id="landingTopLaunchBtn" onclick="document.getElementById('launchStudioBtn').click()">
-          <span>Try Studio</span>
+          <span>Launch Studio</span>
         </button>
       </div>
     </header>
@@ -92,62 +95,75 @@
   </section>
 
   <!-- ========================================================================
-       2. RUNWAY STUDIO WORKSPACE (Locked 100vh Full-Viewport Web Application)
+       2. RUNWAY STUDIO WORKSPACE (Unified Dark Topbar + Frameless Viewport)
        ======================================================================== -->
   <div class="studio-app-shell" id="studioWorkspace">
 
-    <!-- Ultra-Clean Compact Top Bar -->
+    <!-- UNIFIED DARK FROSTED GLASS TOPBAR (Consistent with Landing Page in both Light & Dark modes) -->
     <header class="studio-topbar">
+      <!-- Left: Brand Wordmark + Minimal Glowing Green Dot -->
       <div class="topbar-left">
         <button type="button" class="studio-monogram" id="reopenLandingBtn" title="เปิดหน้าแนะนำ (Intro View)">
           <span class="mono-symbol">📐</span>
         </button>
         <div class="studio-brand-meta">
-          <div class="studio-title-row">
-            <span class="studio-brand">ARCH // STUDIO</span>
-            <span class="studio-status-dot" title="Live Parametric Engine"></span>
-            <span class="studio-tag" id="topbarVersionTag">v4.0</span>
-          </div>
-          <span class="studio-divider-slash">/</span>
-          <p class="studio-subtitle" id="topbarSubtitle">Bangkok Zoning &amp; 3D Envelope Simulator</p>
+          <span class="studio-brand">ARCH // STUDIO</span>
+          <span class="studio-status-dot" title="Real-time Engine Active"></span>
+          <!-- Preserved in sr-only for script.js compatibility -->
+          <span class="sr-only" id="topbarVersionTag">v5.0</span>
+          <p class="sr-only" id="topbarSubtitle">Bangkok Zoning &amp; 3D Envelope Simulator</p>
         </div>
       </div>
 
-      <!-- Right Controls Dock -->
+      <!-- Center: Translucent Micro-Typography Telemetry (Matches Landing Page) -->
+      <div class="topbar-center" aria-hidden="true">
+        <span>BMA COMPREHENSIVE ZONING 2026</span>
+        <span class="nav-dot-sep">&bull;</span>
+        <span>REG. 33 &amp; 55</span>
+        <span class="nav-dot-sep">&bull;</span>
+        <span>REAL-TIME 3D VIEWPORT</span>
+      </div>
+
+      <!-- Right: Unified Capsule Action Buttons -->
       <div class="topbar-right studio-controls-dock">
-        <div class="lang-switcher" id="topbarLangSwitcher" role="group" aria-label="สลับภาษา TH / EN">
+        <!-- 1. Capsule Language Toggle [ TH | EN ] -->
+        <div class="lang-switcher dark-glass-lang" id="topbarLangSwitcher" role="group" aria-label="สลับภาษา TH / EN">
           <button type="button" class="lang-btn active" data-lang-switch="th" id="btnLangTh">TH</button>
           <button type="button" class="lang-btn" data-lang-switch="en" id="btnLangEn">EN</button>
         </div>
 
-        <button class="tactile-btn secondary" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-          <span class="btn-label-desktop" id="labelResetBtn">รีเซ็ต</span>
+        <!-- 2. Minimalist Icon Reset Capsule Button with Tooltip -->
+        <button type="button" class="topbar-icon-capsule" id="resetWorkspaceBtn" title="รีเซ็ตค่าเริ่มต้น (Reset Parameters)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span class="sr-only" id="labelResetBtn">รีเซ็ต</span>
         </button>
 
-        <button class="tactile-btn primary" id="copySummaryBtn" title="คัดลอกสรุปศักยภาพที่ดิน">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
-          <span class="btn-label-desktop" id="labelCopyBtn">คัดลอกสรุป</span>
+        <!-- 3. Theme Toggle Capsule [ ☀️ Light / 🌙 Dark ] -->
+        <button type="button" class="topbar-theme-capsule" id="themeToggleBtn" title="สลับโหมดสว่าง/มืด (Switch Light / Dark Mode)">
+          <svg id="themeIcon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+          <span class="theme-label-light">Light</span>
+          <span class="theme-label-dark">Dark</span>
         </button>
 
-        <button class="icon-toggle-btn" id="themeToggleBtn" title="สลับโหมดสว่าง/มืด (Studio Dark/Light)">
-          <svg id="themeIcon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+        <!-- 4. Primary Export Summary Button (Sleek White Pill) -->
+        <button type="button" class="topbar-white-pill" id="copySummaryBtn" title="คัดลอกสรุปศักยภาพที่ดิน (Export Summary)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+          <span id="labelCopyBtn">คัดลอกสรุป</span>
         </button>
       </div>
     </header>
 
-    <!-- Studio Main 2-Pane Split: Left Inspector Sidebar + Right Hero Viewport -->
+    <!-- Studio Main 2-Pane Split: Frameless Left Sidebar + Full-Bleed Right Viewport -->
     <main class="workspace-grid">
 
-      <!-- LEFT COLUMN: Clean Parameter Sidebar (Independently Scrollable) -->
+      <!-- LEFT COLUMN: Frameless Parameter Inspector (Hairline Dividers, Zero Container Hell) -->
       <aside class="inspector-column" aria-label="Parameter Inspector">
-        <!-- Visually hidden legacy headers to keep UI ultra-clean while preserving script.js IDs -->
         <div class="sr-only">
           <span id="badgeInspector">PARAMETERS</span>
           <h2 id="headingInspector">พารามิเตอร์ที่ดินและกฎหมาย</h2>
         </div>
 
-        <!-- Card 1: ขนาดแปลงและมิติที่ดิน (Parcel Dimensions & Area) -->
+        <!-- Section 01: ขนาดแปลงและมิติที่ดิน (Parcel Dimensions & Area) -->
         <section class="inspector-card">
           <div class="card-bar">
             <div class="card-caption">
@@ -240,7 +256,7 @@
           </div>
         </section>
 
-        <!-- Card 2: เขตทางถนนสาธารณะ (Public Road ROW) -->
+        <!-- Section 02: เขตทางถนนสาธารณะ (Public Road ROW) -->
         <section class="inspector-card">
           <div class="card-bar">
             <div class="card-caption">
@@ -275,7 +291,7 @@
           </p>
         </section>
 
-        <!-- Card 3: ผังสี กทม. & ประเภทอาคาร (BMA Zoning & Typology) -->
+        <!-- Section 03: ผังสี กทม. & ประเภทอาคาร (BMA Zoning & macOS Segmented Capsule Typology) -->
         <section class="inspector-card">
           <div class="card-bar">
             <div class="card-caption">
@@ -330,27 +346,28 @@
             </div>
           </div>
 
+          <!-- macOS-Style Segmented Capsule Slider for Building Typology -->
           <div class="form-group" style="margin-top: 12px;">
             <label class="form-label" id="labelTypology">ประเภทอาคาร (Building Typology)</label>
-            <div class="typology-grid" id="typologyGrid">
-              <button class="typo-pill active" data-typo="residential" id="btnTypoResidential">
+            <div class="typology-segmented-slider" id="typologyGrid" role="radiogroup" aria-label="Building Typology">
+              <button type="button" class="typo-pill active" data-typo="residential" id="btnTypoResidential">
                 <span class="typo-icon">🏡</span>
-                <span class="typo-name" id="typoNameResidential">บ้านเดี่ยว / พักอาศัย</span>
+                <span class="typo-name" id="typoNameResidential">บ้านพักอาศัย</span>
               </button>
-              <button class="typo-pill" data-typo="shophouse" id="btnTypoShophouse">
+              <button type="button" class="typo-pill" data-typo="shophouse" id="btnTypoShophouse">
                 <span class="typo-icon">🏬</span>
-                <span class="typo-name" id="typoNameShophouse">อาคารพาณิชย์ / ตึกแถว</span>
+                <span class="typo-name" id="typoNameShophouse">ตึกแถว/พาณิชย์</span>
               </button>
-              <button class="typo-pill" data-typo="highrise" id="btnTypoHighrise">
+              <button type="button" class="typo-pill" data-typo="highrise" id="btnTypoHighrise">
                 <span class="typo-icon">🏢</span>
-                <span class="typo-name" id="typoNameHighrise">อาคารขนาดใหญ่ / คอนโด</span>
+                <span class="typo-name" id="typoNameHighrise">อาคารสูง/คอนโด</span>
               </button>
             </div>
           </div>
         </section>
 
-        <!-- Card 4: ประมาณการมูลค่าที่ดิน (Land Price Estimator) -->
-        <section class="inspector-card">
+        <!-- Section 04: ประมาณการมูลค่าที่ดิน (Land Price Estimator) -->
+        <section class="inspector-card inspector-card-last">
           <div class="card-bar">
             <div class="card-caption">
               <span class="caption-index">04</span>
@@ -381,100 +398,91 @@
         </section>
       </aside>
 
-      <!-- CENTER / RIGHT HERO STAGE: Sleek HUD Strip + Full-Height Interactive Canvas + Slide-Over Drawer -->
+      <!-- CENTER / RIGHT FRAMELESS VIEWPORT STAGE -->
       <section class="visualizer-column">
-        <!-- Visually hidden legacy headers -->
         <div class="sr-only">
           <span id="badgeBoard">STUDIO VIEWPORT</span>
           <h2 id="headingBoard">ผังวิเคราะห์ศักยภาพและมวลปริมาตรอาคาร 3 มิติ</h2>
+          <span id="boardHeadingText">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
+          <span id="canvasScaleTag">SCALE 1:200</span>
+          <span id="liveEngineBadge">REAL-TIME PARAMETRIC ENGINE</span>
         </div>
 
-        <!-- TOP SLEEK HUD STRIP: Compact Gatekeeper Status + 4 Inline Metric Cells -->
+        <!-- SLEEK LOW-PROFILE METRIC HUD RIBBON (Frameless, Crisp Large Numbers) -->
         <div class="studio-hud-strip">
-          <!-- Compact Gatekeeper Status Pill Bar -->
+          <!-- Compact Gatekeeper Status Pill -->
           <div class="road-gatekeeper-banner pass" id="roadGatekeeperBanner" role="status" aria-live="polite">
             <div class="gatekeeper-icon-box" id="gatekeeperIconBox">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6 9 17l-5-5"/></svg>
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6 9 17l-5-5"/></svg>
             </div>
             <div class="gatekeeper-body">
               <div class="gatekeeper-header-row">
                 <span class="gatekeeper-pill" id="gatekeeperPill">✓ ถูกต้องตามกฎหมาย</span>
                 <strong class="gatekeeper-title" id="gatekeeperTitle">ผ่านเกณฑ์ความกว้างเขตทางสำหรับประเภทอาคารที่เลือก</strong>
               </div>
-              <p class="gatekeeper-desc" id="gatekeeperDesc">
+              <p class="sr-only" id="gatekeeperDesc">
                 ถนนสาธารณะกว้าง 6.00 ม. สอดคล้องตามเกณฑ์ควบคุมอาคารสำหรับบ้านเดี่ยว / พักอาศัย
               </p>
             </div>
           </div>
 
-          <!-- Sleek 4-Metric Ribbon Grid -->
+          <!-- 4 Sleek Inline Metric Cells -->
           <div class="hero-metrics-grid">
             <div class="metric-tile primary-tile" id="tileGfa">
               <div class="tile-header">
                 <span class="tile-code" id="codeGfa">MAX GFA // FAR</span>
-                <span class="tile-tag" id="tagGfa">MAX ALLOWED</span>
+                <span class="tile-tag" id="tagGfa">MAX</span>
               </div>
               <div class="tile-main-row">
                 <div class="tile-metric-value" id="valMaxGfa">200</div>
                 <div class="tile-metric-unit" id="unitGfa">SQ.M.</div>
               </div>
-              <div class="tile-footer-note" id="noteGfa">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
+              <div class="sr-only" id="noteGfa">พื้นที่อาคารรวมทุกชั้นสูงสุดตาม FAR</div>
             </div>
 
             <div class="metric-tile">
               <div class="tile-header">
                 <span class="tile-code" id="codeBcr">BCR // FOOTPRINT</span>
-                <span class="tile-tag" id="tagBcr">GROUND COVER</span>
+                <span class="tile-tag" id="tagBcr">COVER</span>
               </div>
               <div class="tile-main-row">
                 <div class="tile-metric-value" id="valMaxFootprint">96</div>
                 <div class="tile-metric-unit" id="unitBcr">SQ.M.</div>
               </div>
-              <div class="tile-footer-note" id="noteBcr">พื้นที่ปกคลุมดินชั้นล่างสุดตามผังสี</div>
+              <div class="sr-only" id="noteBcr">พื้นที่ปกคลุมดินชั้นล่างสุดตามผังสี</div>
             </div>
 
             <div class="metric-tile">
               <div class="tile-header">
                 <span class="tile-code" id="codeOsr">OSR // OPEN SPACE</span>
-                <span class="tile-tag" id="tagOsr">MIN REQUIRED</span>
+                <span class="tile-tag" id="tagOsr">MIN</span>
               </div>
               <div class="tile-main-row">
                 <div class="tile-metric-value" id="valMinOpenSpace">80</div>
                 <div class="tile-metric-unit" id="unitOsr">SQ.M.</div>
               </div>
-              <div class="tile-footer-note" id="noteOsr">ที่ว่างขั้นต่ำปราศจากสิ่งปกคลุมดิน</div>
+              <div class="sr-only" id="noteOsr">ที่ว่างขั้นต่ำปราศจากสิ่งปกคลุมดิน</div>
             </div>
 
             <div class="metric-tile">
               <div class="tile-header">
                 <span class="tile-code" id="codeHeight">MAX HEIGHT // H</span>
-                <span class="tile-tag" id="tagHeight">ROAD ANGLE</span>
+                <span class="tile-tag" id="tagHeight">LIMIT</span>
               </div>
               <div class="tile-main-row">
                 <div class="tile-metric-value" id="valHeightLimit">12 ม. (~3 ชั้น)</div>
                 <div class="tile-metric-unit sr-only" id="unitHeight">เมตร</div>
               </div>
-              <div class="tile-footer-note" id="noteHeightRule">อิงกฎหมายระยะร่นและเขตทาง 6.00 ม.</div>
+              <div class="sr-only" id="noteHeightRule">อิงกฎหมายระยะร่นและเขตทาง 6.00 ม.</div>
             </div>
           </div>
         </div>
 
-        <!-- CENTER HERO 3D / 2D VIEWPORT (Expands to fill 75%+ of Viewport) -->
+        <!-- FULL-BLEED FRAMELESS 3D / 2D VIEWPORT CANVAS -->
         <div class="schematic-board-shell">
-          <div class="board-toolbar">
-            <div class="board-title-group">
-              <span class="board-dot"></span>
-              <span class="board-heading" id="boardHeadingText">2D SCHEMATIC PLAN &amp; LEGAL SETBACKS</span>
-              <span class="board-scale-tag" id="canvasScaleTag">SCALE 1:200</span>
-            </div>
-            <div class="board-live-pill">
-              <span class="live-pulse"></span>
-              <span id="liveEngineBadge">REAL-TIME PARAMETRIC ENGINE</span>
-            </div>
-          </div>
-
           <div class="schematic-viewport" id="schematicViewport">
-            <!-- Floating Controls Dock -->
+
+            <!-- FLOATING GLASS TOOLBAR OVER CANVAS -->
             <div class="floating-controls-dock" id="floatingControlsDock" role="toolbar" aria-label="Viewport Controls">
               <div class="view-mode-switcher" id="viewModeSwitcher" role="tablist" aria-label="สลับมุมมอง 2D / 3D">
                 <button class="view-switch-btn active" data-view-mode="2d" id="btnView2D" type="button">
@@ -671,6 +679,6 @@
     <span id="studioToastMsg">คัดลอกข้อมูลสำเร็จ</span>
   </div>
 
-  <script src="script.js?v=4.0"></script>
+  <script src="script.js?v=5.0"></script>
 </body>
 </html>
