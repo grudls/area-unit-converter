@@ -117,8 +117,8 @@ const I18N_STATIC = {
     landingTitleSub: 'ARCH // STUDIO — Bangkok Zoning & 3D Envelope Simulator',
     landingTaglinePrimary: 'จำลองศักยภาพผังเมืองและมวลอาคารแห่งอนาคต',
     landingTaglineSecondary: 'Building Spatial Intelligence for Bangkok — 3D Massing & Real-Time Codes',
-    launchStudioBtnText: 'เข้าสู่สตูดิโอ (Launch Studio)',
-    viewRegsBtnText: 'ดูเกณฑ์กฎหมาย กทม. (BMA Regulations)',
+    launchStudioBtnText: 'Launch Studio',
+    viewRegsBtnText: 'Documentation (ข้อกำหนดกฎหมาย)',
     landingChip1: 'BMA Comprehensive Zoning 2026',
     landingChip2: 'Ministerial Reg. No. 33 & 55',
     landingChip3: 'Real-Time 3D Parametric Engine',
@@ -215,7 +215,7 @@ const I18N_STATIC = {
     landingTaglinePrimary: 'Building Spatial Intelligence for Bangkok',
     landingTaglineSecondary: 'Simulate Bangkok Building Codes, Setbacks & 3D Massing Envelopes in Real-Time',
     launchStudioBtnText: 'Launch Studio',
-    viewRegsBtnText: 'View BMA Regulations',
+    viewRegsBtnText: 'Documentation',
     landingChip1: 'BMA Comprehensive Zoning 2026',
     landingChip2: 'Ministerial Reg. No. 33 & 55',
     landingChip3: 'Real-Time 3D Parametric Engine',
@@ -1408,18 +1408,16 @@ function initEventListeners() {
     viewRegsBtn.addEventListener('click', () => {
       landingView.classList.add('dismissed');
       const drawerBody = document.getElementById('drawerBody');
+      const drawerHeader = document.getElementById('drawerHeaderToggle');
       const drawerStateTag = document.getElementById('drawerStateTag');
-      if (drawerBody && drawerBody.classList.contains('collapsed')) {
-        drawerBody.classList.remove('collapsed');
-        if (drawerStateTag) {
-          drawerStateTag.textContent = isEn() ? 'Hide details' : 'ซ่อนรายละเอียด';
-        }
+      if (drawerBody) {
+        drawerBody.classList.remove('hidden', 'collapsed');
       }
-      const drawerCard = document.getElementById('legalDrawerCard');
-      if (drawerCard) {
-        setTimeout(() => {
-          drawerCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 150);
+      if (drawerHeader) {
+        drawerHeader.classList.remove('collapsed');
+      }
+      if (drawerStateTag) {
+        drawerStateTag.textContent = isEn() ? 'Hide details' : 'ซ่อนรายละเอียด';
       }
     });
   }
